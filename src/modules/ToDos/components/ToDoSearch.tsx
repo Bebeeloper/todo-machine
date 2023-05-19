@@ -7,6 +7,7 @@ import { LightDarkMode } from '../types/types';
 
 const SearchIconWrapper = styled('div')(({ theme }) => ({
   padding: theme.spacing(0, 2),
+  // width: '100%',
   height: '100%',
   position: 'absolute',
   pointerEvents: 'none',
@@ -35,6 +36,7 @@ function ToDoSearch(props: LightDarkMode) {
   const { mode } = props;
 
   const Search = styled('div')(({ theme }) => ({
+    width: '100%',
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
     // backgroundColor: alpha(theme.palette.common.white, 0.15),
@@ -48,7 +50,6 @@ function ToDoSearch(props: LightDarkMode) {
       backgroundColor: mode === false ? 'none' : alpha(theme.palette.common.white, 0.3),
     },
     marginLeft: 0,
-    width: '100%',
     [theme.breakpoints.up('sm')]: {
       marginLeft: theme.spacing(1),
       width: 'auto',
@@ -56,7 +57,7 @@ function ToDoSearch(props: LightDarkMode) {
   }));
 
   return (
-    <Search style={{width: '80%'}}>
+    <Search style={{width: '85%'}}>
       <SearchIconWrapper>
         <SearchIcon />
       </SearchIconWrapper>

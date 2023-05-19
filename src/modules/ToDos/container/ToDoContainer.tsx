@@ -146,8 +146,6 @@ function ToDoContainer() {
                       <Box sx={{
                         width: '100%',
                         height: '70%',
-                        display: 'flex',
-                        justifyContent: 'center',
                         position: 'relative',
                       }}>
                         <ToDoList>
