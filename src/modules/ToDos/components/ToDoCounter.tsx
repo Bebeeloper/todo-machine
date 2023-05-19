@@ -9,7 +9,7 @@ function ToDoCounter(props: ToDoCounterType) {
       <Typography variant="h4" align="center" sx={{margin: 1, fontWeight: 700}}>
           Tus tareas
       </Typography>
-      <Typography variant="h6" align="center" sx={{mb: 1}}>
+      <Typography variant="h6" align="center" sx={{mb: 2}}>
           Has completado {completed} de {total} tareas...
       </Typography>
     </>

@@ -71,12 +71,13 @@ const toDos = [
     {text: 'Diseñar logo Debugploy', completed: false},
     {text: 'Diseñar logo Debugploy', completed: false},
     {text: 'Diseñar logo Debugploy', completed: false},
-    {text: 'Diseñar logo Debugploy', completed: false},
+    {text: 'Diseñar logo Debugploy Diseñar logo Debugploy Diseñar logo Debugploy Diseñar logo Debugploy Diseñar logo Debugploy', completed: false},
 ];
 
 function ToDoContainer() {
 
-    const [mode, setMode] = useState(false);
+    const [mode, setMode] = useState<boolean>(false);
+    const [taskCompleted, setTaskCompleted] = useState<boolean>(false);
     const theme = createTheme({
         palette:{
             mode: mode ? "dark" : "light"
@@ -154,6 +155,9 @@ function ToDoContainer() {
                             <ToDoItem 
                               key={index} 
                               text={todo.text}
+                              mode={mode}
+                              taskCompleted={taskCompleted}
+                              setTaskCompleted={setTaskCompleted}
                             />
                           ))}
                         </ToDoList>

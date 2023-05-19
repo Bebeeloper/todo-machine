@@ -1,0 +1,14 @@
+.scroll-list::-webkit-scrollbar{
+    width: 0.5rem;
+}
+
+/* Handle */
+.scroll-list::-webkit-scrollbar-thumb {
+    background: rgba(165, 165, 165, 0.63); 
+    border-radius: 10px;
+}
+
+/* Handle on hover */
+.scroll-list::-webkit-scrollbar-thumb:hover {
+    background: rgba(128, 128, 128, 0.63); 
+}

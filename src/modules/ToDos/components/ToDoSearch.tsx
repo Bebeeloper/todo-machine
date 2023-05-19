@@ -16,6 +16,7 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  width: '100%',
   color: 'inherit',
   '& .MuiInputBase-input': {
     padding: theme.spacing(1, 1, 1, 0),
@@ -38,12 +39,12 @@ function ToDoSearch(props: LightDarkMode) {
     borderRadius: theme.shape.borderRadius,
     // backgroundColor: alpha(theme.palette.common.white, 0.15),
     backgroundColor: mode === false ? 'white' : alpha(theme.palette.common.white, 0.15),
-    boxShadow: mode === false ? 'rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px' : 'none',
+    boxShadow: mode === false ? 'rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px' : 'none',
     '&:hover': {
       // backgroundColor: alpha(theme.palette.common.white, 0.25),
       // backgroundColor: palette_colors.light_letter,
       // border: '0.1px solid blue',
-      boxShadow: mode === false ? 'rgba(0, 0, 0, 0.3) 1.95px 1.95px 2.6px' : 'none',
+      boxShadow: mode === false ? 'rgba(60, 64, 67, 0.5) 0px 1px 2px 0px, rgba(60, 64, 67, 0.2) 0px 2px 6px 2px' : 'none',
       backgroundColor: mode === false ? 'none' : alpha(theme.palette.common.white, 0.3),
     },
     marginLeft: 0,

@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { Dispatch, ReactNode } from "react";
 
 export type ToDoCounterType = {
     completed: number;
@@ -7,6 +7,9 @@ export type ToDoCounterType = {
 
 export type ToDoItemType = {
     text: string;
+    mode: boolean;
+    taskCompleted: boolean;
+    setTaskCompleted: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export type ToDoListType = {
@@ -18,6 +21,7 @@ export type LightDarkMode = {
 }
 
 export const palette_colors = {
+    blue_background: '#5AA4EE',
     error: '#FF4D4D',
     light_letter: '#EFF3F5',
     modal_background: '#A0A7AC',
