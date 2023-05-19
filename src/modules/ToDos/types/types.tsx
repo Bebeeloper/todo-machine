@@ -13,6 +13,10 @@ export type ToDoListType = {
     children?: ReactNode;
 };
 
+export type LightDarkMode = {
+    mode: boolean
+}
+
 export const palette_colors = {
     error: '#FF4D4D',
     light_letter: '#EFF3F5',

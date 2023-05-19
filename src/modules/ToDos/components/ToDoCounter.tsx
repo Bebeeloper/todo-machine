@@ -6,9 +6,12 @@ function ToDoCounter(props: ToDoCounterType) {
     const { completed, total } = props;
   return (
     <>
-        <Typography variant="h6" align="center">
-            Has completado {completed} de {total} tareas...
-        </Typography>
+      <Typography variant="h4" align="center">
+          Tus tareas
+      </Typography>
+      <Typography variant="h6" align="center">
+          Has completado {completed} de {total} tareas...
+      </Typography>
     </>
     // <h1> Has completado {completed} de {total}</h1>
   )

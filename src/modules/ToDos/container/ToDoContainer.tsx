@@ -114,19 +114,20 @@ function ToDoContainer() {
                         // bgcolor: 'blue'
                     }}>
                         <CreateTask/>
-                        {/* <Box sx={{
-                            width: '100%',
-                            height: '50%',
-                            bgcolor: 'yellow'
-                        }}> */}
-                            <img src={taskPic} alt="imagen de tareas" style={{width: '60%'}} />
-                        {/* </Box> */}
+                        <img src={taskPic} alt="imagen de tareas" style={{width: '60%'}} />
                     </Box>
                     <Box sx={{ 
+                        display: 'flex',
+                        justifyContent: 'center',
+                        flexDirection: 'column',
+                        alignItems: 'center',
                         width: '50%',
-                        height: '100%',
+                        height: '100%'
                         // bgcolor: 'green'
-                    }}>Sección de tareas aquí...</Box>
+                    }}>
+                      <ToDoCounter completed={2} total={5}/>
+                      <ToDoSearch mode={mode}/>
+                    </Box>
                 </Paper>
             </Box>
         </Paper>
