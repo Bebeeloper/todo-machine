@@ -14,8 +14,9 @@ export type ToDoListType = {
 };
 
 export const palette_colors = {
- light_letter: '#EFF3F5',
- modal_background: '#A0A7AC',
- dark_container: '#2A3B47',
- dark_background: '#192229'
+    error: '#FF4D4D',
+    light_letter: '#EFF3F5',
+    modal_background: '#A0A7AC',
+    dark_container: '#212E36',
+    dark_background: '#192229'
 }

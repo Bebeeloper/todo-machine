@@ -5,6 +5,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import { palette_colors } from '../types/types';
 
 function CreateTask() {
 
@@ -24,7 +25,8 @@ function CreateTask() {
         
         <Box component="form" noValidate onSubmit={handleSubmit(onSubmitModal)} sx={{
             padding: '1rem',
-            width: '100%', 
+            width: '80%', 
+            height: '50%'
             // bgcolor: 'blue' 
         }} >
             <Typography variant="h4" sx={{
@@ -48,7 +50,7 @@ function CreateTask() {
                 {...register('task', {required: true})}
                 // inputProps={{ style: { fontFamily: 'nunito', color: 'white' } }}
             />
-            {errors.task?.type === 'required' && <Typography variant="body1" sx={{color: 'red'}}>Debe escribir una tarea</Typography>}
+            {errors.task?.type === 'required' && <Typography variant="body1" sx={{color: palette_colors.error}}>Debe escribir una tarea</Typography>}
             <Button
                 type="submit"
                 variant="contained"

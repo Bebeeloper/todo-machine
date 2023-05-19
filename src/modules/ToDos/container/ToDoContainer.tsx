@@ -5,6 +5,7 @@ import ToDoList from '../components/ToDoList';
 import ToDoItem from '../components/ToDoItem';
 import CreateToDoButton from '../components/CreateToDoButton';
 import { palette_colors } from '../types/types';
+import taskPic from '../../../resources/task.png'
 
 // Material ui
 import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
@@ -59,11 +60,20 @@ function ToDoContainer() {
                     <Box sx={{ 
                         display: 'flex',
                         justifyContent: 'center',
+                        flexDirection: 'column',
+                        alignItems: 'center',
                         width: '50%',
-                        height: '100%',
+                        height: '100%'
                         // bgcolor: 'blue'
                     }}>
-                        <CreateTask />
+                        <CreateTask/>
+                        {/* <Box sx={{
+                            width: '100%',
+                            height: '50%',
+                            bgcolor: 'yellow'
+                        }}> */}
+                            <img src={taskPic} alt="imagen de tareas" style={{width: '60%'}} />
+                        {/* </Box> */}
                     </Box>
                     <Box sx={{ 
                         width: '50%',
