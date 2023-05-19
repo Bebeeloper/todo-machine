@@ -64,7 +64,14 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
 
 const toDos = [
     {text: 'Mejorar habilidades de programación', completed: false},
-    {text: 'Diseñar logo Debugploy', completed: false}
+    {text: 'Diseñar logo Debugploy', completed: false},
+    {text: 'Diseñar logo Debugploy', completed: false},
+    {text: 'Diseñar logo Debugploy', completed: false},
+    {text: 'Diseñar logo Debugploy', completed: false},
+    {text: 'Diseñar logo Debugploy', completed: false},
+    {text: 'Diseñar logo Debugploy', completed: false},
+    {text: 'Diseñar logo Debugploy', completed: false},
+    {text: 'Diseñar logo Debugploy', completed: false},
 ];
 
 function ToDoContainer() {
@@ -117,34 +124,44 @@ function ToDoContainer() {
                         <img src={taskPic} alt="imagen de tareas" style={{width: '60%'}} />
                     </Box>
                     <Box sx={{ 
+                      width: '50%',
+                      height: '100%',
+                      display: 'flex',
+                      flexDirection: 'column'
+                    }}>
+                      <Box sx={{
+                        width: '100%',
+                        height: '30%',
                         display: 'flex',
+                        alignItems: 'center',
                         justifyContent: 'center',
                         flexDirection: 'column',
-                        alignItems: 'center',
-                        width: '50%',
-                        height: '100%'
-                        // bgcolor: 'green'
-                    }}>
-                      <ToDoCounter completed={2} total={5}/>
-                      <ToDoSearch mode={mode}/>
+                        // bgcolor: 'red'
+
+                      }}>
+                        <ToDoCounter completed={2} total={5}/>
+                        <ToDoSearch mode={mode}/>
+                      </Box>
+                      <Box sx={{
+                        width: '100%',
+                        height: '70%',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        position: 'relative',
+                      }}>
+                        <ToDoList>
+                          {toDos.map((todo, index) => (
+                            <ToDoItem 
+                              key={index} 
+                              text={todo.text}
+                            />
+                          ))}
+                        </ToDoList>
+                      </Box>
                     </Box>
                 </Paper>
             </Box>
         </Paper>
-      {/* <ToDoCounter 
-        completed={2} 
-        total={5}
-      />
-      <ToDoSearch />
-      <ToDoList>
-        {toDos.map((todo, index) => (
-          <ToDoItem 
-            key={index} 
-            text={todo.text}
-          />
-        ))}
-      </ToDoList>
-      <CreateToDoButton /> */}
     </ThemeProvider>
   )
 }

@@ -55,7 +55,7 @@ function ToDoSearch(props: LightDarkMode) {
   }));
 
   return (
-    <Search>
+    <Search style={{width: '80%'}}>
       <SearchIconWrapper>
         <SearchIcon />
       </SearchIconWrapper>
