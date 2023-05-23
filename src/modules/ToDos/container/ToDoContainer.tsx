@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import ToDoCounter from '../components/ToDoCounter';
 import ToDoSearch from '../components/ToDoSearch';
 import ToDoList from '../components/ToDoList';
@@ -9,13 +9,28 @@ import taskPic from '../../../resources/task.png';
 
 // Material ui
 import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
-// import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import CreateTask from '../components/CreateTask';
 import Switch from '@mui/material/Switch';
-// import { relative } from 'path';
 import Button from '@mui/material/Button';
+
+//react-spring-bottom-sheet
+import Modal from '@mui/material/Modal';
+import Typography from '@mui/material/Typography';
+
+const styledModal = {
+  position: 'absolute' as 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: '70%',
+  bgcolor: 'background.paper',
+  // border: '2px solid #000',
+  borderRadius: 3,
+  boxShadow: 24,
+  p: 4,
+};
 
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   position: 'absolute',
@@ -80,6 +95,10 @@ const toDos = [
 ];
 
 function ToDoContainer() {
+
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
     const [screenWidth, setScreenWidth] = useState<number>(window.innerWidth);
     const [mode, setMode] = useState<boolean>(false);
@@ -248,10 +267,20 @@ function ToDoContainer() {
                 width: '100%',
                 height: '10%'
               }}>
-                <Button variant="contained" sx={{
+                <Button variant="contained" onClick={() => setOpen(true)} sx={{
                   width: '100%',
                   height: '100%'
                 }}>Añadir tarea</Button>
+                <Modal
+                  open={open}
+                  onClose={handleClose}
+                  aria-labelledby="modal-modal-title"
+                  aria-describedby="modal-modal-description"
+                >
+                  <Box sx={styledModal}>
+                    <CreateTask/>
+                  </Box>
+                </Modal>
               </Box>            
             </Box>
           </Box>
