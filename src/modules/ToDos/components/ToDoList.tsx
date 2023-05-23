@@ -7,15 +7,14 @@ import Box from '@mui/material/Box';
 function ToDoList(props: ToDoListType) {
     const { children } = props
   return (
-    <ul className='scroll-list' style={{
+    <Box className='scroll-list' style={{
       position: 'absolute', 
       overflow: 'auto', 
-      width: '90%', 
-      height: '80%', 
-      listStyle: 'none'
+      width: '100%', 
+      height: '80%',
     }}>
       {children}
-    </ul>
+    </Box>
   )
 }
 

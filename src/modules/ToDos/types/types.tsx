@@ -17,7 +17,8 @@ export type ToDoListType = {
 };
 
 export type LightDarkMode = {
-    mode: boolean
+    mode: boolean;
+    screenWidth: number;
 }
 
 export const palette_colors = {
@@ -28,3 +29,7 @@ export const palette_colors = {
     dark_container: '#212E36',
     dark_background: '#192229'
 }
+
+// export type ToDoSearchType = {
+//     screenWidth: number
+// }
