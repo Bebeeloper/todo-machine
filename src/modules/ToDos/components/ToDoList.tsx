@@ -11,7 +11,7 @@ function ToDoList(props: ToDoListType) {
       position: 'absolute', 
       overflow: 'auto', 
       width: '100%', 
-      height: '80%',
+      height: '95%',
     }}>
       {children}
     </Box>

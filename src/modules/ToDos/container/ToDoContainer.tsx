@@ -5,7 +5,7 @@ import ToDoList from '../components/ToDoList';
 import ToDoItem from '../components/ToDoItem';
 import CreateToDoButton from '../components/CreateToDoButton';
 import { palette_colors } from '../types/types';
-import taskPic from '../../../resources/task.png'
+import taskPic from '../../../resources/task.png';
 
 // Material ui
 import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
@@ -14,7 +14,8 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import CreateTask from '../components/CreateTask';
 import Switch from '@mui/material/Switch';
-import { relative } from 'path';
+// import { relative } from 'path';
+import Button from '@mui/material/Button';
 
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   position: 'absolute',
@@ -222,19 +223,36 @@ function ToDoContainer() {
             <Box sx={{
               width: '100%',
               height: '70%',
-              position: 'relative',
+              display: 'flex',
+              flexDirection: 'column'
+              // position: 'relative',
             }}>
-            <ToDoList>
-              {toDos.map((todo, index) => (
-                <ToDoItem 
-                  key={index} 
-                  text={todo.text}
-                  mode={mode}
-                  taskCompleted={taskCompleted}
-                  setTaskCompleted={setTaskCompleted}
-                />
-              ))}
-            </ToDoList>
+              <Box sx={{
+                width: '100%',
+                height: '90%',
+                position: 'relative'
+              }}>
+                <ToDoList>
+                  {toDos.map((todo, index) => (
+                    <ToDoItem 
+                      key={index} 
+                      text={todo.text}
+                      mode={mode}
+                      taskCompleted={taskCompleted}
+                      setTaskCompleted={setTaskCompleted}
+                    />
+                  ))}
+                </ToDoList> 
+              </Box>
+              <Box sx={{
+                width: '100%',
+                height: '10%'
+              }}>
+                <Button variant="contained" sx={{
+                  width: '100%',
+                  height: '100%'
+                }}>Añadir tarea</Button>
+              </Box>            
             </Box>
           </Box>
         </Paper>
