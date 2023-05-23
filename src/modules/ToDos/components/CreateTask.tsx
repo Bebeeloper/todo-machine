@@ -6,23 +6,22 @@ import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { palette_colors } from '../types/types';
+// import { CreateTaskType } from '../types/types';
 
 function CreateTask() {
+
+    // const {screenWidth} = props;
 
     const {register, formState: {errors}, handleSubmit, reset, formState, getValues} = useForm({
         mode: "onChange"
     });
     
     const onSubmitModal = () => {
-      
-        
         reset();
-        
     };
 
   return (
     <>
-        
         <Box component="form" noValidate onSubmit={handleSubmit(onSubmitModal)} sx={{
             padding: '1rem',
             width: '80%', 

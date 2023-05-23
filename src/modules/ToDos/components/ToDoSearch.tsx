@@ -1,9 +1,14 @@
-import React from 'react'
+import {useState} from 'react'
 import { styled, alpha } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
 import { palette_colors } from '../types/types';
 import { LightDarkMode } from '../types/types';
+import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import Box from '@mui/material/Box';
 
 const SearchIconWrapper = styled('div')(({ theme }) => ({
   padding: theme.spacing(0, 2),
@@ -18,6 +23,7 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   width: '100%',
+  height: '100%',
   color: 'inherit',
   '& .MuiInputBase-input': {
     padding: theme.spacing(1, 1, 1, 0),
@@ -33,7 +39,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 function ToDoSearch(props: LightDarkMode) {
 
-  const { mode } = props;
+  const { mode, screenWidth } = props;
 
   const Search = styled('div')(({ theme }) => ({
     width: '100%',
@@ -56,16 +62,42 @@ function ToDoSearch(props: LightDarkMode) {
     },
   }));
 
+  const [filter, setFilter] = useState('All');
+
+  const handleChange = (event: SelectChangeEvent) => {
+    setFilter(event.target.value as string);
+  };
+
   return (
-    <Search style={{width: '85%'}}>
-      <SearchIconWrapper>
-        <SearchIcon />
-      </SearchIconWrapper>
-      <StyledInputBase
-        placeholder="Search…"
-        inputProps={{ 'aria-label': 'search' }}
-      />
-    </Search>
+    <Box sx={{
+      width: '100%',
+      display: 'flex',
+      justifyContent: screenWidth > 800 ? 'space-between' : 'space-around'
+    }}>
+      <Search style={{width: '60%'}}>
+        <SearchIconWrapper>
+          <SearchIcon />
+        </SearchIconWrapper>
+        <StyledInputBase
+          placeholder="Search…"
+          inputProps={{ 'aria-label': 'search' }}
+        />
+      </Search>
+      <FormControl sx={{width: '30%'}}>
+      <InputLabel id="demo-simple-select-label">Filtro</InputLabel>
+      <Select
+        labelId="demo-simple-select-label"
+        id="demo-simple-select"
+        value={filter}
+        label="Filtro"
+        onChange={handleChange}
+      >
+        <MenuItem value={'All'}>Todas</MenuItem>
+        <MenuItem value={'Completed'}>Completadas</MenuItem>
+        <MenuItem value={'Earring'}>Pendientes</MenuItem>
+      </Select>
+    </FormControl>
+    </Box>
   )
 }
 
