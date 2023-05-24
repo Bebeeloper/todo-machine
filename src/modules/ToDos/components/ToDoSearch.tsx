@@ -2,7 +2,7 @@ import {useState} from 'react'
 import { styled, alpha } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
-import { palette_colors } from '../types/types';
+// import { palette_colors } from '../types/types';
 import { LightDarkMode } from '../types/types';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';

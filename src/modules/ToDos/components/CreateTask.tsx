@@ -12,7 +12,7 @@ function CreateTask(props: LightDarkMode) {
 
     // const {screenWidth} = props;
 
-    const {register, formState: {errors}, handleSubmit, reset, formState, getValues} = useForm({
+    const {register, formState: {errors}, handleSubmit, reset, /*formState, getValues*/} = useForm({
         mode: "onChange"
     });
     

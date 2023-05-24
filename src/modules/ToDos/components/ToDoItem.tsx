@@ -1,8 +1,8 @@
 import React from 'react'
-import { styled, alpha } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 import { ToDoItemType } from '../types/types'
 import Box from '@mui/material/Box';
-import IconButton from '@mui/material/IconButton';
+// import IconButton from '@mui/material/IconButton';
 import CheckIcon from '@mui/icons-material/Check';
 import Typography from '@mui/material/Typography';
 import { palette_colors } from '../types/types';

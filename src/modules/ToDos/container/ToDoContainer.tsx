@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import ToDoCounter from '../components/ToDoCounter';
 import ToDoSearch from '../components/ToDoSearch';
 import ToDoList from '../components/ToDoList';
 import ToDoItem from '../components/ToDoItem';
-import CreateToDoButton from '../components/CreateToDoButton';
+// import CreateToDoButton from '../components/CreateToDoButton';
 import { palette_colors } from '../types/types';
 import taskPic from '../../../resources/task.png';
 
@@ -17,7 +17,8 @@ import Button from '@mui/material/Button';
 
 //react-spring-bottom-sheet
 import Modal from '@mui/material/Modal';
-import Typography from '@mui/material/Typography';
+// import Typography from '@mui/material/Typography';
+// import { light } from '@mui/material/styles/createPalette';
 
 const styledModal = {
   position: 'absolute' as 'absolute',
@@ -82,7 +83,22 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   },
 }));
 
-const toDos = [
+// const toDos = [
+//     {text: 'Mejorar habilidades de programación', completed: false},
+//     {text: 'Diseñar logo Debugploy', completed: false},
+//     {text: 'Diseñar logo Debugploy', completed: false},
+//     {text: 'Diseñar logo Debugploy', completed: false},
+//     {text: 'Diseñar logo Debugploy', completed: false},
+//     {text: 'Diseñar logo Debugploy', completed: false},
+//     {text: 'Diseñar logo Debugploy', completed: false},
+//     {text: 'Diseñar logo Debugploy', completed: true},
+//     {text: 'Diseñar logo Debugploy Diseñar logo Debugploy Diseñar logo Debugploy Diseñar logo Debugploy Diseñar logo Debugploy', completed: false},
+// ];
+
+function ToDoContainer() {
+
+  // ToDos Arrays
+  const [toDos, setToDos] = useState<{text: string; completed: boolean}[]>([
     {text: 'Mejorar habilidades de programación', completed: false},
     {text: 'Diseñar logo Debugploy', completed: false},
     {text: 'Diseñar logo Debugploy', completed: false},
@@ -90,36 +106,48 @@ const toDos = [
     {text: 'Diseñar logo Debugploy', completed: false},
     {text: 'Diseñar logo Debugploy', completed: false},
     {text: 'Diseñar logo Debugploy', completed: false},
-    {text: 'Diseñar logo Debugploy', completed: false},
-    {text: 'Diseñar logo Debugploy Diseñar logo Debugploy Diseñar logo Debugploy Diseñar logo Debugploy Diseñar logo Debugploy', completed: false},
-];
+    {text: 'Diseñar logo Debugploy', completed: true},
+    {text: 'Diseñar logo Debugploy Diseñar logo Debugploy Diseñar logo Debugploy Diseñar logo Debugploy Diseñar logo Debugploy', completed: true},
+  ]);
 
-function ToDoContainer() {
+  // ToDo filter
+  const [filter, setFilter] = useState<string>('Completed');
 
-    const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+  // Modal
+  const [openModal, setOpenModal] = React.useState(false);
+  const handleClose = () => setOpenModal(false);
 
-    const [screenWidth, setScreenWidth] = useState<number>(window.innerWidth);
-    const [mode, setMode] = useState<boolean>(false);
-    const [taskCompleted, setTaskCompleted] = useState<boolean>(false);
-    const theme = createTheme({
-        palette:{
-            mode: mode ? "dark" : "light"
-        }
-    });
+  // Screen width
+  const [screenWidth, setScreenWidth] = useState<number>(window.innerWidth);
 
-    useEffect(() => {
-      const handleWindowResize = () => {
-        setScreenWidth(window.innerWidth);
-      };
+  // Dark light mode
+  const [mode, setMode] = useState<boolean>(false);
+  const [taskCompleted, setTaskCompleted] = useState<boolean>(false);
+
+  // Dark light mode theme
+  const theme = createTheme({
+      palette:{
+          mode: mode ? "dark" : "light"
+      }
+  });
+
+  const toDosCompleted = toDos.filter(toDo => toDo.completed);
+  const toDosEarring = toDos.filter((toDo) => !toDo.completed);
+
+  // console.log('toDosCompleted: ', toDosCompleted);
   
-      window.addEventListener('resize', handleWindowResize);
-  
-      return () => {
-        window.removeEventListener('resize', handleWindowResize);
-      };
-    }, []);
+  // Calculate screen width in real time
+  useEffect(() => {
+    const handleWindowResize = () => {
+      setScreenWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleWindowResize);
+
+    return () => {
+      window.removeEventListener('resize', handleWindowResize);
+    };
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>
@@ -164,7 +192,7 @@ function ToDoContainer() {
                       height: '100%'
                       // bgcolor: 'blue'
                   }}>
-                      <CreateTask/>
+                      <CreateTask mode={mode} screenWidth={screenWidth}/>
                       <img src={taskPic} alt="imagen de tareas" style={{width: '60%'}} />
                   </Box>
                   <Box sx={{ 
@@ -192,7 +220,37 @@ function ToDoContainer() {
                       position: 'relative',
                     }}>
                       <ToDoList>
-                        {toDos.map((todo, index) => (
+                        {
+                          filter === 'All' ? 
+                            toDos.map((todo, index) => (
+                              <ToDoItem 
+                                key={index} 
+                                text={todo.text}
+                                mode={mode}
+                                taskCompleted={taskCompleted}
+                                setTaskCompleted={setTaskCompleted}
+                              />
+                            )) : filter === 'Completed' ? 
+                                  toDosCompleted.map((todo, index) => (
+                                    <ToDoItem 
+                                      key={index} 
+                                      text={todo.text}
+                                      mode={mode}
+                                      taskCompleted={taskCompleted}
+                                      setTaskCompleted={setTaskCompleted}
+                                    />
+                                  )) : 
+                                  toDosEarring.map((todo, index) => (
+                                    <ToDoItem 
+                                      key={index} 
+                                      text={todo.text}
+                                      mode={mode}
+                                      taskCompleted={taskCompleted}
+                                      setTaskCompleted={setTaskCompleted}
+                                    />
+                                  ))
+                        }
+                        {/* {toDos.map((todo, index) => (
                           <ToDoItem 
                             key={index} 
                             text={todo.text}
@@ -200,7 +258,7 @@ function ToDoContainer() {
                             taskCompleted={taskCompleted}
                             setTaskCompleted={setTaskCompleted}
                           />
-                        ))}
+                        ))} */}
                       </ToDoList>
                     </Box>
                   </Box>
@@ -252,7 +310,37 @@ function ToDoContainer() {
                 position: 'relative'
               }}>
                 <ToDoList>
-                  {toDos.map((todo, index) => (
+                  {
+                    filter === 'All' ? 
+                      toDos.map((todo, index) => (
+                        <ToDoItem 
+                          key={index} 
+                          text={todo.text}
+                          mode={mode}
+                          taskCompleted={taskCompleted}
+                          setTaskCompleted={setTaskCompleted}
+                        />
+                      )) : filter === 'Completed' ? 
+                            toDosCompleted.map((todo, index) => (
+                              <ToDoItem 
+                                key={index} 
+                                text={todo.text}
+                                mode={mode}
+                                taskCompleted={taskCompleted}
+                                setTaskCompleted={setTaskCompleted}
+                              />
+                            )) : 
+                            toDosEarring.map((todo, index) => (
+                              <ToDoItem 
+                                key={index} 
+                                text={todo.text}
+                                mode={mode}
+                                taskCompleted={taskCompleted}
+                                setTaskCompleted={setTaskCompleted}
+                              />
+                            ))
+                  }
+                  {/* {toDos.map((todo, index) => (
                     <ToDoItem 
                       key={index} 
                       text={todo.text}
@@ -260,25 +348,25 @@ function ToDoContainer() {
                       taskCompleted={taskCompleted}
                       setTaskCompleted={setTaskCompleted}
                     />
-                  ))}
-                </ToDoList> 
+                  ))} */}
+                </ToDoList>
               </Box>
               <Box sx={{
                 width: '100%',
                 height: '10%'
               }}>
-                <Button variant="contained" onClick={() => setOpen(true)} sx={{
+                <Button variant="contained" onClick={() => setOpenModal(true)} sx={{
                   width: '100%',
                   height: '100%'
                 }}>Añadir tarea</Button>
                 <Modal
-                  open={open}
+                  open={openModal}
                   onClose={handleClose}
                   aria-labelledby="modal-modal-title"
                   aria-describedby="modal-modal-description"
                 >
                   <Box sx={styledModal}>
-                    <CreateTask/>
+                    <CreateTask mode={mode} screenWidth={screenWidth}/>
                   </Box>
                 </Modal>
               </Box>            
