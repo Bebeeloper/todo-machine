@@ -6,9 +6,9 @@ import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { palette_colors } from '../types/types';
-// import { CreateTaskType } from '../types/types';
+import { LightDarkMode } from '../types/types';
 
-function CreateTask() {
+function CreateTask(props: LightDarkMode) {
 
     // const {screenWidth} = props;
 
