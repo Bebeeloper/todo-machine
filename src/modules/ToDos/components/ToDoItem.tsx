@@ -33,7 +33,16 @@ function ToDoItem(props: ToDoItemType) {
       display: 'flex',
       borderRadius: '10px',
       // backgroundColor: mode === false ? palette_colors.blue_background : palette_colors.dark_background
-      backgroundColor: mode === false ? toDos[index].completed ? palette_colors.modal_background : palette_colors.blue_background : toDos[index].completed ? palette_colors.dark_background : palette_colors.dark_container 
+      backgroundColor: mode === false ? 
+                          filterToDos === 'all' ?
+                            toDos[index].completed ? palette_colors.modal_background : palette_colors.blue_background 
+                          :
+                            filterToDos === 'pending' ? palette_colors.blue_background : palette_colors.modal_background
+                       : 
+                          filterToDos === 'all' ?
+                            toDos[index].completed ? palette_colors.dark_background : palette_colors.dark_container 
+                          :
+                            filterToDos === 'pending' ? palette_colors.dark_container : palette_colors.dark_background
       // boxShadow: mode === false ? 'rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px' : 'none',
       // boxShadow: mode === false ? 'rgba(0, 0, 0, 0.3) 1.95px 1.95px 2.6px' : 'none',
     }}>
@@ -45,7 +54,7 @@ function ToDoItem(props: ToDoItemType) {
         alignItems: 'center'
       }}>
         <Btn onClick={() => {completeToDos(index)}} sx={{
-          bgcolor: filterToDos === 'all' ? toDos[index].completed ? 'green' : 'none' : filterToDos === 'completed' ? 'none' : 'green'
+          bgcolor: filterToDos === 'all' ? toDos[index].completed ? 'green' : 'none' : filterToDos === 'pending' ? 'none' : 'green'
         }}>
           <CheckIcon />
         </Btn>
@@ -54,8 +63,8 @@ function ToDoItem(props: ToDoItemType) {
         width: '80%'
       }}>
         <Typography color={palette_colors.light_letter} sx={{
-          color: toDos[index].completed ? palette_colors.dark_container : 'white',
-          textDecorationLine: toDos[index].completed ? 'line-through': 'none'
+          color: filterToDos === 'all' ? toDos[index].completed ? palette_colors.dark_container : 'white' : filterToDos === 'pending' ? 'white' : palette_colors.dark_container,
+          textDecorationLine: filterToDos === 'all' ? toDos[index].completed ? 'line-through': 'none' : filterToDos === 'pending' ? 'none' : 'line-through'
         }}>
           {text}
         </Typography>

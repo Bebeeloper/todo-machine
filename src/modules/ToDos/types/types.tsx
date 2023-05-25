@@ -15,6 +15,7 @@ export type ToDoItemType = {
 };
 
 type ToDos = {
+    index_todos: number;
     text: string;
     completed: boolean;
 }[]
@@ -31,14 +32,17 @@ export type ToDoSearchType = {
     filterToDosSelect: FilterToDos;
     toDos: ToDos;
     setToDos: React.Dispatch<React.SetStateAction<{
+        index_todos: number;
         text: string;
         completed: boolean;
     }[]>>;
     setToDosCompleted: React.Dispatch<React.SetStateAction<{
+        index_todos: number;
         text: string;
         completed: boolean;
     }[]>>;
     setToDoPending: React.Dispatch<React.SetStateAction<{
+        index_todos: number;
         text: string;
         completed: boolean;
     }[]>>;

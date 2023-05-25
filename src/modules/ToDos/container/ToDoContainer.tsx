@@ -81,16 +81,16 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
 function ToDoContainer() {
 
   // ToDos Arrays
-  const [toDos, setToDos] = useState<{text: string; completed: boolean}[]>([
-    {text: 'Tatea 1', completed: true},
-    {text: 'Tatea 2', completed: true},
-    {text: 'Tatea 3', completed: false},
-    {text: 'Tatea 4', completed: false},
-    {text: 'Tatea 5', completed: false},
-    {text: 'Tatea 6', completed: false},
-    {text: 'Tatea 7', completed: false},
-    {text: 'Tatea 8', completed: false},
-    {text: 'Tatea 9', completed: false},
+  const [toDos, setToDos] = useState<{index_todos: number; text: string; completed: boolean}[]>([
+    {index_todos: 0, text: 'Tatea 1', completed: false},
+    {index_todos: 0, text: 'Tatea 2', completed: false},
+    {index_todos: 0, text: 'Tatea 3', completed: false},
+    {index_todos: 0, text: 'Tatea 4', completed: false},
+    {index_todos: 0, text: 'Tatea 5', completed: false},
+    {index_todos: 0, text: 'Tatea 6', completed: false},
+    {index_todos: 0, text: 'Tatea 7', completed: false},
+    {index_todos: 0, text: 'Tatea 8', completed: false},
+    {index_todos: 0, text: 'Tatea 9', completed: false},
   ]);
 
   // ToDo filter
@@ -118,12 +118,14 @@ function ToDoContainer() {
       }
   });
 
-  const [toDosCompleted, setToDosCompleted] = useState<{text: string; completed: boolean}[]>(toDos.filter(toDo => toDo.completed === true));
-  const [toDoPending, setToDoPending] = useState<{text: string; completed: boolean}[]>(toDos.filter((toDo) => toDo.completed === false));
+  // const [toDosCompleted, setToDosCompleted] = useState<{text: string; completed: boolean}[]>(toDos.filter(toDo => toDo.completed === true));
+  // const [toDoPending, setToDoPending] = useState<{text: string; completed: boolean}[]>(toDos.filter((toDo) => toDo.completed === false));
+  const [toDosCompleted, setToDosCompleted] = useState<{index_todos: number; text: string; completed: boolean}[]>([]);
+  const [toDoPending, setToDoPending] = useState<{index_todos: number; text: string; completed: boolean}[]>([]);
   // const toDosCompleted = toDos.filter(toDo => toDo.completed === true);
   // const toDoPending = toDos.filter((toDo) => toDo.completed === false);
 
-  console.log('toDosCompleted: ', toDosCompleted);
+  // console.log('toDosCompleted: ', toDosCompleted);
   
   // Calculate screen width in real time
   useEffect(() => {
@@ -139,37 +141,35 @@ function ToDoContainer() {
   }, []);
 
   const completeToDos = (index: number) => {
-    // switch (filterToDos) {
-    //   case 'all':
-    //     const newToDos = [...toDos];
-    //     newToDos[index].completed = !newToDos[index].completed;
-    //     setToDos(newToDos);
-    //     // setToDosCompleted(toDos.filter(toDo => toDo.completed === true));
-    //     // setToDoPending(toDos.filter((toDo) => toDo.completed === false));
-    //     setToDosCompleted(newToDos);
-    //     setToDoPending(newToDos);
-    //     break;
-    //   case 'completed':
-    //     const newToDosCompleted = [...toDos];
-    //     newToDosCompleted[index].completed = !newToDosCompleted[index].completed;
-    //     setToDos(newToDosCompleted);
-    //     // setToDosCompleted(toDos.filter(toDo => toDo.completed === true));
-    //     // setToDoPending(toDos.filter((toDo) => toDo.completed === false));
-    //     setToDosCompleted(newToDosCompleted);
-    //     setToDoPending(newToDosCompleted);
-    //     break;
-    //   case 'pending':
-    //     const newToDosPending = [...toDos];
-    //     newToDosPending[index].completed = !newToDosPending[index].completed;
-    //     setToDos(newToDosPending);
-    //     // setToDosCompleted(toDos.filter(toDo => toDo.completed === true));
-    //     // setToDoPending(toDos.filter((toDo) => toDo.completed === false));
-    //     setToDosCompleted(newToDosPending);
-    //     setToDoPending(newToDosPending);
-    //     break;
-    //   default:
-    //     break;
-    // }
+    switch (filterToDos) {
+      case 'all':
+        const newToDos = [...toDos];
+        newToDos[index].completed = !newToDos[index].completed;
+        setToDos(newToDos);
+        if (toDos[index].completed === true) {
+          setToDosCompleted(oldArray => [...oldArray, {index_todos: index, text: toDos[index].text, completed: true}]);
+        }        
+        break;
+      case 'completed':
+        const newToDosCompleted = [...toDos];
+        newToDosCompleted[toDosCompleted[index].index_todos].completed = !newToDosCompleted[toDosCompleted[index].index_todos].completed;
+        setToDos(newToDosCompleted);
+        if (toDos[toDosCompleted[index].index_todos].completed === true) {
+          setToDosCompleted(toDosCompleted.splice(toDosCompleted[index].index_todos, 1));
+        }
+        break;
+      case 'pending':
+        // const newToDosPending = [...toDos];
+        // newToDosPending[toDosCompleted[index].index_todos].completed = !newToDosPending[index].completed;
+        // setToDos(newToDosPending);
+        // // setToDosCompleted(toDos.filter(toDo => toDo.completed === true));
+        // // setToDoPending(toDos.filter((toDo) => toDo.completed === false));
+        // setToDosCompleted(newToDosPending);
+        // setToDoPending(newToDosPending);
+        break;
+      default:
+        break;
+    }
     
   }
 
