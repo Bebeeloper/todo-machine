@@ -3,7 +3,7 @@ import { styled, alpha } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
 // import { palette_colors } from '../types/types';
-import { LightDarkMode } from '../types/types';
+import { ToDoSearchType } from '../types/types';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
@@ -37,9 +37,9 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-function ToDoSearch(props: LightDarkMode) {
+function ToDoSearch(props: ToDoSearchType) {
 
-  const { mode, screenWidth } = props;
+  const { mode, screenWidth, filterToDos, filterToDosSelect, setFilterToDos, toDos, setToDos, setToDosCompleted, setToDoPending } = props;
 
   const Search = styled('div')(({ theme }) => ({
     width: '100%',
@@ -62,10 +62,11 @@ function ToDoSearch(props: LightDarkMode) {
     },
   }));
 
-  const [filter, setFilter] = useState('All');
-
-  const handleChange = (event: SelectChangeEvent) => {
-    setFilter(event.target.value as string);
+  const handleChange = (event: any) => {
+    setFilterToDos(event.target.value); 
+    // setToDos(toDos);
+    setToDosCompleted(toDos.filter((toDo: any) => toDo.completed === true));
+    setToDoPending(toDos.filter((toDo: any) => toDo.completed === false));   
   };
 
   return (
@@ -88,13 +89,13 @@ function ToDoSearch(props: LightDarkMode) {
       <Select
         labelId="demo-simple-select-label"
         id="demo-simple-select"
-        value={filter}
+        value={filterToDos}
         label="Filtro"
         onChange={handleChange}
       >
-        <MenuItem value={'All'}>Todas</MenuItem>
-        <MenuItem value={'Completed'}>Completadas</MenuItem>
-        <MenuItem value={'Earring'}>Pendientes</MenuItem>
+        {filterToDosSelect.map((option, index) => (
+          <MenuItem key={index} value={option.value}>{option.text}</MenuItem>
+        ))}
       </Select>
     </FormControl>
     </Box>

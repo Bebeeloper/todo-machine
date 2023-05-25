@@ -25,14 +25,15 @@ const Btn = styled('div')(({ theme }) => ({
 }));
 
 function ToDoItem(props: ToDoItemType) {
-    const { text, mode, taskCompleted, setTaskCompleted} = props
+    const { index, text, mode, completeToDos, toDos, filterToDos} = props
   return (
     <li style={{
       padding: '10px',
       margin: '10px', 
       display: 'flex',
       borderRadius: '10px',
-      backgroundColor: mode === false ? palette_colors.blue_background : palette_colors.dark_background
+      // backgroundColor: mode === false ? palette_colors.blue_background : palette_colors.dark_background
+      backgroundColor: mode === false ? toDos[index].completed ? palette_colors.modal_background : palette_colors.blue_background : toDos[index].completed ? palette_colors.dark_background : palette_colors.dark_container 
       // boxShadow: mode === false ? 'rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px' : 'none',
       // boxShadow: mode === false ? 'rgba(0, 0, 0, 0.3) 1.95px 1.95px 2.6px' : 'none',
     }}>
@@ -43,8 +44,8 @@ function ToDoItem(props: ToDoItemType) {
         justifyContent: 'center',
         alignItems: 'center'
       }}>
-        <Btn onClick={() => setTaskCompleted(!taskCompleted)} sx={{
-          bgcolor: taskCompleted ? 'green' : 'none'
+        <Btn onClick={() => {completeToDos(index)}} sx={{
+          bgcolor: filterToDos === 'all' ? toDos[index].completed ? 'green' : 'none' : filterToDos === 'completed' ? 'none' : 'green'
         }}>
           <CheckIcon />
         </Btn>
@@ -52,7 +53,10 @@ function ToDoItem(props: ToDoItemType) {
       <Box sx={{
         width: '80%'
       }}>
-        <Typography color={palette_colors.light_letter}>
+        <Typography color={palette_colors.light_letter} sx={{
+          color: toDos[index].completed ? palette_colors.dark_container : 'white',
+          textDecorationLine: toDos[index].completed ? 'line-through': 'none'
+        }}>
           {text}
         </Typography>
       </Box>

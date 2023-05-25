@@ -3,7 +3,6 @@ import ToDoCounter from '../components/ToDoCounter';
 import ToDoSearch from '../components/ToDoSearch';
 import ToDoList from '../components/ToDoList';
 import ToDoItem from '../components/ToDoItem';
-// import CreateToDoButton from '../components/CreateToDoButton';
 import { palette_colors } from '../types/types';
 import taskPic from '../../../resources/task.png';
 
@@ -14,11 +13,7 @@ import Paper from '@mui/material/Paper';
 import CreateTask from '../components/CreateTask';
 import Switch from '@mui/material/Switch';
 import Button from '@mui/material/Button';
-
-//react-spring-bottom-sheet
 import Modal from '@mui/material/Modal';
-// import Typography from '@mui/material/Typography';
-// import { light } from '@mui/material/styles/createPalette';
 
 const styledModal = {
   position: 'absolute' as 'absolute',
@@ -83,35 +78,28 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   },
 }));
 
-// const toDos = [
-//     {text: 'Mejorar habilidades de programación', completed: false},
-//     {text: 'Diseñar logo Debugploy', completed: false},
-//     {text: 'Diseñar logo Debugploy', completed: false},
-//     {text: 'Diseñar logo Debugploy', completed: false},
-//     {text: 'Diseñar logo Debugploy', completed: false},
-//     {text: 'Diseñar logo Debugploy', completed: false},
-//     {text: 'Diseñar logo Debugploy', completed: false},
-//     {text: 'Diseñar logo Debugploy', completed: true},
-//     {text: 'Diseñar logo Debugploy Diseñar logo Debugploy Diseñar logo Debugploy Diseñar logo Debugploy Diseñar logo Debugploy', completed: false},
-// ];
-
 function ToDoContainer() {
 
   // ToDos Arrays
   const [toDos, setToDos] = useState<{text: string; completed: boolean}[]>([
-    {text: 'Mejorar habilidades de programación', completed: false},
-    {text: 'Diseñar logo Debugploy', completed: false},
-    {text: 'Diseñar logo Debugploy', completed: false},
-    {text: 'Diseñar logo Debugploy', completed: false},
-    {text: 'Diseñar logo Debugploy', completed: false},
-    {text: 'Diseñar logo Debugploy', completed: false},
-    {text: 'Diseñar logo Debugploy', completed: false},
-    {text: 'Diseñar logo Debugploy', completed: true},
-    {text: 'Diseñar logo Debugploy Diseñar logo Debugploy Diseñar logo Debugploy Diseñar logo Debugploy Diseñar logo Debugploy', completed: true},
+    {text: 'Tatea 1', completed: true},
+    {text: 'Tatea 2', completed: true},
+    {text: 'Tatea 3', completed: false},
+    {text: 'Tatea 4', completed: false},
+    {text: 'Tatea 5', completed: false},
+    {text: 'Tatea 6', completed: false},
+    {text: 'Tatea 7', completed: false},
+    {text: 'Tatea 8', completed: false},
+    {text: 'Tatea 9', completed: false},
   ]);
 
   // ToDo filter
-  const [filter, setFilter] = useState<string>('Completed');
+  const [filterToDos, setFilterToDos] = useState<string>('all');
+  const [filterToDosSelect, setFilterToDosSelect] = useState<{value: string; text: string}[]>([
+    {value: 'all', text: 'Todas'},
+    {value: 'completed', text: 'Completadas'},
+    {value: 'pending', text: 'Pendientes'}
+  ]);
 
   // Modal
   const [openModal, setOpenModal] = React.useState(false);
@@ -122,7 +110,6 @@ function ToDoContainer() {
 
   // Dark light mode
   const [mode, setMode] = useState<boolean>(false);
-  const [taskCompleted, setTaskCompleted] = useState<boolean>(false);
 
   // Dark light mode theme
   const theme = createTheme({
@@ -131,10 +118,12 @@ function ToDoContainer() {
       }
   });
 
-  const toDosCompleted = toDos.filter(toDo => toDo.completed);
-  const toDosEarring = toDos.filter((toDo) => !toDo.completed);
+  const [toDosCompleted, setToDosCompleted] = useState<{text: string; completed: boolean}[]>(toDos.filter(toDo => toDo.completed === true));
+  const [toDoPending, setToDoPending] = useState<{text: string; completed: boolean}[]>(toDos.filter((toDo) => toDo.completed === false));
+  // const toDosCompleted = toDos.filter(toDo => toDo.completed === true);
+  // const toDoPending = toDos.filter((toDo) => toDo.completed === false);
 
-  // console.log('toDosCompleted: ', toDosCompleted);
+  console.log('toDosCompleted: ', toDosCompleted);
   
   // Calculate screen width in real time
   useEffect(() => {
@@ -148,6 +137,77 @@ function ToDoContainer() {
       window.removeEventListener('resize', handleWindowResize);
     };
   }, []);
+
+  const completeToDos = (index: number) => {
+    // switch (filterToDos) {
+    //   case 'all':
+    //     const newToDos = [...toDos];
+    //     newToDos[index].completed = !newToDos[index].completed;
+    //     setToDos(newToDos);
+    //     // setToDosCompleted(toDos.filter(toDo => toDo.completed === true));
+    //     // setToDoPending(toDos.filter((toDo) => toDo.completed === false));
+    //     setToDosCompleted(newToDos);
+    //     setToDoPending(newToDos);
+    //     break;
+    //   case 'completed':
+    //     const newToDosCompleted = [...toDos];
+    //     newToDosCompleted[index].completed = !newToDosCompleted[index].completed;
+    //     setToDos(newToDosCompleted);
+    //     // setToDosCompleted(toDos.filter(toDo => toDo.completed === true));
+    //     // setToDoPending(toDos.filter((toDo) => toDo.completed === false));
+    //     setToDosCompleted(newToDosCompleted);
+    //     setToDoPending(newToDosCompleted);
+    //     break;
+    //   case 'pending':
+    //     const newToDosPending = [...toDos];
+    //     newToDosPending[index].completed = !newToDosPending[index].completed;
+    //     setToDos(newToDosPending);
+    //     // setToDosCompleted(toDos.filter(toDo => toDo.completed === true));
+    //     // setToDoPending(toDos.filter((toDo) => toDo.completed === false));
+    //     setToDosCompleted(newToDosPending);
+    //     setToDoPending(newToDosPending);
+    //     break;
+    //   default:
+    //     break;
+    // }
+    
+  }
+
+  const filterValue: any = {
+    "all": toDos.map((todo, index) => (
+      <ToDoItem 
+        key={index} 
+        index={index}
+        text={todo.text}
+        mode={mode}
+        completeToDos={completeToDos}
+        toDos={toDos}
+        filterToDos={filterToDos}
+      />
+    )),
+    "completed": toDosCompleted.map((todo, index) => (
+      <ToDoItem 
+        key={index} 
+        index={index}
+        text={todo.text}
+        mode={mode}
+        completeToDos={completeToDos}
+        toDos={toDos}
+        filterToDos={filterToDos}
+      />
+    )),
+    "pending": toDoPending.map((todo, index) => (
+      <ToDoItem 
+        key={index} 
+        index={index}
+        text={todo.text}
+        mode={mode}
+        completeToDos={completeToDos}
+        toDos={toDos}
+        filterToDos={filterToDos}
+      />
+    ))
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -192,7 +252,7 @@ function ToDoContainer() {
                       height: '100%'
                       // bgcolor: 'blue'
                   }}>
-                      <CreateTask mode={mode} screenWidth={screenWidth}/>
+                      <CreateTask/>
                       <img src={taskPic} alt="imagen de tareas" style={{width: '60%'}} />
                   </Box>
                   <Box sx={{ 
@@ -212,7 +272,17 @@ function ToDoContainer() {
 
                     }}>
                       <ToDoCounter completed={2} total={5}/>
-                      <ToDoSearch mode={mode} screenWidth={screenWidth}/>
+                      <ToDoSearch 
+                        mode={mode} 
+                        screenWidth={screenWidth}
+                        filterToDos={filterToDos}
+                        setFilterToDos={setFilterToDos}
+                        filterToDosSelect={filterToDosSelect}
+                        toDos={toDos}
+                        setToDos={setToDos}
+                        setToDosCompleted={setToDosCompleted}
+                        setToDoPending={setToDoPending}
+                      />
                     </Box>
                     <Box sx={{
                       width: '100%',
@@ -221,34 +291,38 @@ function ToDoContainer() {
                     }}>
                       <ToDoList>
                         {
-                          filter === 'All' ? 
-                            toDos.map((todo, index) => (
-                              <ToDoItem 
-                                key={index} 
-                                text={todo.text}
-                                mode={mode}
-                                taskCompleted={taskCompleted}
-                                setTaskCompleted={setTaskCompleted}
-                              />
-                            )) : filter === 'Completed' ? 
-                                  toDosCompleted.map((todo, index) => (
-                                    <ToDoItem 
-                                      key={index} 
-                                      text={todo.text}
-                                      mode={mode}
-                                      taskCompleted={taskCompleted}
-                                      setTaskCompleted={setTaskCompleted}
-                                    />
-                                  )) : 
-                                  toDosEarring.map((todo, index) => (
-                                    <ToDoItem 
-                                      key={index} 
-                                      text={todo.text}
-                                      mode={mode}
-                                      taskCompleted={taskCompleted}
-                                      setTaskCompleted={setTaskCompleted}
-                                    />
-                                  ))
+                          // filterToDos === 'All' ? 
+                          //   toDos.map((todo, index) => (
+                          //     <ToDoItem 
+                          //       key={index} 
+                          //       index={index}
+                          //       text={todo.text}
+                          //       mode={mode}
+                          //       completeToDos={completeToDos}
+                          //       toDos={toDos}
+                          //     />
+                          //   )) : filterToDos === 'Completed' ? 
+                          //         toDosCompleted.map((todo, index) => (
+                          //           <ToDoItem 
+                          //             key={index} 
+                          //             index={index}
+                          //             text={todo.text}
+                          //             mode={mode}
+                          //             completeToDos={completeToDos}
+                          //             toDos={toDos}
+                          //           />
+                          //         )) : 
+                          //         toDoPending.map((todo, index) => (
+                          //           <ToDoItem 
+                          //             key={index} 
+                          //             index={index}
+                          //             text={todo.text}
+                          //             mode={mode}
+                          //             completeToDos={completeToDos}
+                          //             toDos={toDos}
+                          //           />
+                          //         ))
+                          filterValue[filterToDos]
                         }
                         {/* {toDos.map((todo, index) => (
                           <ToDoItem 
@@ -295,7 +369,17 @@ function ToDoContainer() {
               // bgcolor: 'blue'
             }}>
               <ToDoCounter completed={2} total={5}/>
-              <ToDoSearch mode={mode} screenWidth={screenWidth}/>
+              <ToDoSearch 
+                mode={mode} 
+                screenWidth={screenWidth}
+                filterToDos={filterToDos}
+                setFilterToDos={setFilterToDos}
+                filterToDosSelect={filterToDosSelect}
+                toDos={toDos}
+                setToDos={setToDos}
+                setToDosCompleted={setToDosCompleted}
+                setToDoPending={setToDoPending}
+              />
             </Box>
             <Box sx={{
               width: '100%',
@@ -311,32 +395,38 @@ function ToDoContainer() {
               }}>
                 <ToDoList>
                   {
-                    filter === 'All' ? 
+                    filterToDos === 'all' ? 
                       toDos.map((todo, index) => (
                         <ToDoItem 
                           key={index} 
+                          index={index}
                           text={todo.text}
                           mode={mode}
-                          taskCompleted={taskCompleted}
-                          setTaskCompleted={setTaskCompleted}
+                          completeToDos={completeToDos}
+                          toDos={toDos}
+                          filterToDos={filterToDos}
                         />
-                      )) : filter === 'Completed' ? 
+                      )) : filterToDos === 'completed' ? 
                             toDosCompleted.map((todo, index) => (
                               <ToDoItem 
                                 key={index} 
+                                index={index}
                                 text={todo.text}
                                 mode={mode}
-                                taskCompleted={taskCompleted}
-                                setTaskCompleted={setTaskCompleted}
+                                completeToDos={completeToDos}
+                                toDos={toDos}
+                                filterToDos={filterToDos}
                               />
                             )) : 
-                            toDosEarring.map((todo, index) => (
+                            toDoPending.map((todo, index) => (
                               <ToDoItem 
                                 key={index} 
+                                index={index}
                                 text={todo.text}
                                 mode={mode}
-                                taskCompleted={taskCompleted}
-                                setTaskCompleted={setTaskCompleted}
+                                completeToDos={completeToDos}
+                                toDos={toDos}
+                                filterToDos={filterToDos}
                               />
                             ))
                   }
@@ -366,7 +456,7 @@ function ToDoContainer() {
                   aria-describedby="modal-modal-description"
                 >
                   <Box sx={styledModal}>
-                    <CreateTask mode={mode} screenWidth={screenWidth}/>
+                    <CreateTask/>
                   </Box>
                 </Modal>
               </Box>            
