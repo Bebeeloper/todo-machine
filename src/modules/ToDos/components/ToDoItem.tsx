@@ -25,7 +25,7 @@ const Btn = styled('div')(({ theme }) => ({
 }));
 
 function ToDoItem(props: ToDoItemType) {
-    const { index, text, mode, completeToDos, toDos, filterToDos} = props
+    const { index, text, mode, completeToDos, toDos, filterToDos, indexTodos} = props
   return (
     <li style={{
       padding: '10px',
@@ -53,7 +53,7 @@ function ToDoItem(props: ToDoItemType) {
         justifyContent: 'center',
         alignItems: 'center'
       }}>
-        <Btn onClick={() => {completeToDos(index)}} sx={{
+        <Btn onClick={() => {completeToDos(index, indexTodos)}} sx={{
           bgcolor: filterToDos === 'all' ? toDos[index].completed ? 'green' : 'none' : filterToDos === 'pending' ? 'none' : 'green'
         }}>
           <CheckIcon />

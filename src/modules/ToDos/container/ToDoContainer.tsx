@@ -140,7 +140,7 @@ function ToDoContainer() {
     };
   }, []);
 
-  const completeToDos = (index: number) => {
+  const completeToDos = (index: number, index_todos: number) => {
     switch (filterToDos) {
       case 'all':
         const newToDos = [...toDos];
@@ -151,21 +151,12 @@ function ToDoContainer() {
         }        
         break;
       case 'completed':
-        const newToDosCompleted = [...toDos];
-        newToDosCompleted[toDosCompleted[index].index_todos].completed = !newToDosCompleted[toDosCompleted[index].index_todos].completed;
-        setToDos(newToDosCompleted);
-        if (toDos[toDosCompleted[index].index_todos].completed === true) {
-          setToDosCompleted(toDosCompleted.splice(toDosCompleted[index].index_todos, 1));
-        }
+        const newToDosCompleted = [...toDosCompleted];
+        newToDosCompleted[index].completed = false;
+        setToDosCompleted(newToDosCompleted.filter((todo: any) => todo.completed));
         break;
       case 'pending':
-        // const newToDosPending = [...toDos];
-        // newToDosPending[toDosCompleted[index].index_todos].completed = !newToDosPending[index].completed;
-        // setToDos(newToDosPending);
-        // // setToDosCompleted(toDos.filter(toDo => toDo.completed === true));
-        // // setToDoPending(toDos.filter((toDo) => toDo.completed === false));
-        // setToDosCompleted(newToDosPending);
-        // setToDoPending(newToDosPending);
+        
         break;
       default:
         break;
@@ -183,6 +174,7 @@ function ToDoContainer() {
         completeToDos={completeToDos}
         toDos={toDos}
         filterToDos={filterToDos}
+        indexTodos={toDos[index].index_todos}
       />
     )),
     "completed": toDosCompleted.map((todo, index) => (
@@ -194,6 +186,7 @@ function ToDoContainer() {
         completeToDos={completeToDos}
         toDos={toDos}
         filterToDos={filterToDos}
+        indexTodos={toDos[index].index_todos}
       />
     )),
     "pending": toDoPending.map((todo, index) => (
@@ -205,6 +198,7 @@ function ToDoContainer() {
         completeToDos={completeToDos}
         toDos={toDos}
         filterToDos={filterToDos}
+        indexTodos={toDos[index].index_todos}
       />
     ))
   };
@@ -405,6 +399,7 @@ function ToDoContainer() {
                           completeToDos={completeToDos}
                           toDos={toDos}
                           filterToDos={filterToDos}
+                          indexTodos={toDos[index].index_todos}
                         />
                       )) : filterToDos === 'completed' ? 
                             toDosCompleted.map((todo, index) => (
@@ -416,6 +411,7 @@ function ToDoContainer() {
                                 completeToDos={completeToDos}
                                 toDos={toDos}
                                 filterToDos={filterToDos}
+                                indexTodos={toDos[index].index_todos}
                               />
                             )) : 
                             toDoPending.map((todo, index) => (
@@ -427,6 +423,7 @@ function ToDoContainer() {
                                 completeToDos={completeToDos}
                                 toDos={toDos}
                                 filterToDos={filterToDos}
+                                indexTodos={toDos[index].index_todos}
                               />
                             ))
                   }
