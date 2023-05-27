@@ -42,7 +42,7 @@ export type ToDoSearchType = {
         text: string;
         completed: boolean;
     }[]>>;
-    setToDoPending: React.Dispatch<React.SetStateAction<{
+    setToDosPending: React.Dispatch<React.SetStateAction<{
         index_todos: number;
         text: string;
         completed: boolean;

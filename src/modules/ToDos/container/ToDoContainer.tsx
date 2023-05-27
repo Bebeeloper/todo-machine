@@ -118,14 +118,8 @@ function ToDoContainer() {
       }
   });
 
-  // const [toDosCompleted, setToDosCompleted] = useState<{text: string; completed: boolean}[]>(toDos.filter(toDo => toDo.completed === true));
-  // const [toDoPending, setToDoPending] = useState<{text: string; completed: boolean}[]>(toDos.filter((toDo) => toDo.completed === false));
   const [toDosCompleted, setToDosCompleted] = useState<{index_todos: number; text: string; completed: boolean}[]>([]);
-  const [toDoPending, setToDoPending] = useState<{index_todos: number; text: string; completed: boolean}[]>([]);
-  // const toDosCompleted = toDos.filter(toDo => toDo.completed === true);
-  // const toDoPending = toDos.filter((toDo) => toDo.completed === false);
-
-  // console.log('toDosCompleted: ', toDosCompleted);
+  const [toDosPending, setToDosPending] = useState<{index_todos: number; text: string; completed: boolean}[]>([]);
   
   // Calculate screen width in real time
   useEffect(() => {
@@ -156,7 +150,9 @@ function ToDoContainer() {
         setToDosCompleted(newToDosCompleted.filter((todo: any) => todo.completed));
         break;
       case 'pending':
-        
+        const newToDosPending = [...toDosPending];
+        newToDosPending[index].completed = true;
+        setToDosPending(newToDosPending.filter((todo: any) => !todo.completed));
         break;
       default:
         break;
@@ -189,7 +185,7 @@ function ToDoContainer() {
         indexTodos={toDos[index].index_todos}
       />
     )),
-    "pending": toDoPending.map((todo, index) => (
+    "pending": toDosPending.map((todo, index) => (
       <ToDoItem 
         key={index} 
         index={index}
@@ -275,7 +271,7 @@ function ToDoContainer() {
                         toDos={toDos}
                         setToDos={setToDos}
                         setToDosCompleted={setToDosCompleted}
-                        setToDoPending={setToDoPending}
+                        setToDosPending={setToDosPending}
                       />
                     </Box>
                     <Box sx={{
@@ -306,7 +302,7 @@ function ToDoContainer() {
                           //             toDos={toDos}
                           //           />
                           //         )) : 
-                          //         toDoPending.map((todo, index) => (
+                          //         toDosPending.map((todo, index) => (
                           //           <ToDoItem 
                           //             key={index} 
                           //             index={index}
@@ -372,7 +368,7 @@ function ToDoContainer() {
                 toDos={toDos}
                 setToDos={setToDos}
                 setToDosCompleted={setToDosCompleted}
-                setToDoPending={setToDoPending}
+                setToDosPending={setToDosPending}
               />
             </Box>
             <Box sx={{
@@ -414,7 +410,7 @@ function ToDoContainer() {
                                 indexTodos={toDos[index].index_todos}
                               />
                             )) : 
-                            toDoPending.map((todo, index) => (
+                            toDosPending.map((todo, index) => (
                               <ToDoItem 
                                 key={index} 
                                 index={index}
