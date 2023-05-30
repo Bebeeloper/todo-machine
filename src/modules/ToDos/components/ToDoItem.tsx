@@ -6,6 +6,7 @@ import Box from '@mui/material/Box';
 import CheckIcon from '@mui/icons-material/Check';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { palette_colors } from '../types/types';
 
 
@@ -26,14 +27,13 @@ const Btn = styled('div')(({ theme }) => ({
 }));
 
 function ToDoItem(props: ToDoItemType) {
-    const { index, text, mode, completeToDos, toDos, filterToDos, indexTodos} = props
+    const { index, text, mode, completeToDos, deleteToDos, toDos, filterToDos, indexTodos} = props
   return (
     <li style={{
       padding: '10px',
       margin: '10px', 
       display: 'flex',
       borderRadius: '10px',
-      // backgroundColor: mode === false ? palette_colors.blue_background : palette_colors.dark_background
       backgroundColor: mode === false ? 
                           filterToDos === 'all' ?
                             toDos[index].completed ? palette_colors.modal_background : palette_colors.blue_background 
@@ -44,8 +44,6 @@ function ToDoItem(props: ToDoItemType) {
                             toDos[index].completed ? palette_colors.dark_background : palette_colors.dark_container 
                           :
                             filterToDos === 'pending' ? palette_colors.dark_container : palette_colors.dark_background
-      // boxShadow: mode === false ? 'rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px' : 'none',
-      // boxShadow: mode === false ? 'rgba(0, 0, 0, 0.3) 1.95px 1.95px 2.6px' : 'none',
     }}>
       <Box sx={{
         padding: 1,
@@ -75,10 +73,21 @@ function ToDoItem(props: ToDoItemType) {
           {text}
         </Typography>
       </Box>
-      <Box sx={{
+      {/* <Box sx={{
         width: '10%'
       }}>
         <span>X</span>
+      </Box> */}
+      <Box sx={{
+        padding: 1,
+        width: '10%',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+      }}>
+        <IconButton onClick={() => {deleteToDos(index)}} aria-label="delete" >
+          <DeleteIcon />
+        </IconButton>
       </Box>
     </li>
   )

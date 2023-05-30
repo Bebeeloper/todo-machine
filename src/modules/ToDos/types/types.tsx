@@ -10,6 +10,7 @@ export type ToDoItemType = {
     text: string;
     mode: boolean;
     completeToDos: (index: number, index_todos: number) => void
+    deleteToDos: (index: number) => void;
     toDos: ToDos;
     filterToDos: string;
     indexTodos: number;

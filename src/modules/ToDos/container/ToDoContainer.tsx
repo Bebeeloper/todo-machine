@@ -159,6 +159,36 @@ function ToDoContainer() {
     }
   }
 
+  const deleteToDos = (index: number) => {
+    switch (filterToDos) {
+      case 'all':
+        // const newToDos = [...toDos];
+        // newToDos.filter((todo, i) => i !== index);
+        setToDos(toDos.filter((todo, i) => i !== index));
+        console.log('index: ', index);
+        if (toDos[index].completed) {
+          setToDosCompleted(toDosCompleted.filter((todo) => todo.index_todos !== index));
+        }
+        
+        // if (toDos[index].completed === true) {
+        //   setToDosCompleted(oldArray => [...oldArray, {index_todos: index, text: toDos[index].text, completed: true}]);
+        // }        
+        break;
+      case 'completed':
+        // const newToDosCompleted = [...toDosCompleted];
+        // newToDosCompleted[index].completed = false;
+        // setToDosCompleted(newToDosCompleted.filter((todo: any) => todo.completed));
+        // break;
+      case 'pending':
+        // const newToDosPending = [...toDosPending];
+        // newToDosPending[index].completed = true;
+        // setToDosPending(newToDosPending.filter((todo: any) => !todo.completed));
+        // break;
+      default:
+        break;
+    }
+  }
+
   const filterValue: any = {
     "all": toDos.map((todo, index) => (
       <ToDoItem 
@@ -167,6 +197,7 @@ function ToDoContainer() {
         text={todo.text}
         mode={mode}
         completeToDos={completeToDos}
+        deleteToDos={deleteToDos}
         toDos={toDos}
         filterToDos={filterToDos}
         indexTodos={toDos[index].index_todos}
@@ -179,6 +210,7 @@ function ToDoContainer() {
         text={todo.text}
         mode={mode}
         completeToDos={completeToDos}
+        deleteToDos={deleteToDos}
         toDos={toDos}
         filterToDos={filterToDos}
         indexTodos={toDos[index].index_todos}
@@ -191,6 +223,7 @@ function ToDoContainer() {
         text={todo.text}
         mode={mode}
         completeToDos={completeToDos}
+        deleteToDos={deleteToDos}
         toDos={toDos}
         filterToDos={filterToDos}
         indexTodos={toDos[index].index_todos}
@@ -280,37 +313,6 @@ function ToDoContainer() {
                     }}>
                       <ToDoList>
                         {
-                          // filterToDos === 'All' ? 
-                          //   toDos.map((todo, index) => (
-                          //     <ToDoItem 
-                          //       key={index} 
-                          //       index={index}
-                          //       text={todo.text}
-                          //       mode={mode}
-                          //       completeToDos={completeToDos}
-                          //       toDos={toDos}
-                          //     />
-                          //   )) : filterToDos === 'Completed' ? 
-                          //         toDosCompleted.map((todo, index) => (
-                          //           <ToDoItem 
-                          //             key={index} 
-                          //             index={index}
-                          //             text={todo.text}
-                          //             mode={mode}
-                          //             completeToDos={completeToDos}
-                          //             toDos={toDos}
-                          //           />
-                          //         )) : 
-                          //         toDosPending.map((todo, index) => (
-                          //           <ToDoItem 
-                          //             key={index} 
-                          //             index={index}
-                          //             text={todo.text}
-                          //             mode={mode}
-                          //             completeToDos={completeToDos}
-                          //             toDos={toDos}
-                          //           />
-                          //         ))
                           filterValue[filterToDos]
                         }
                         {/* {toDos.map((todo, index) => (
@@ -392,6 +394,7 @@ function ToDoContainer() {
                           text={todo.text}
                           mode={mode}
                           completeToDos={completeToDos}
+                          deleteToDos={deleteToDos}
                           toDos={toDos}
                           filterToDos={filterToDos}
                           indexTodos={toDos[index].index_todos}
@@ -404,6 +407,7 @@ function ToDoContainer() {
                                 text={todo.text}
                                 mode={mode}
                                 completeToDos={completeToDos}
+                                deleteToDos={deleteToDos}
                                 toDos={toDos}
                                 filterToDos={filterToDos}
                                 indexTodos={toDos[index].index_todos}
@@ -416,6 +420,7 @@ function ToDoContainer() {
                                 text={todo.text}
                                 mode={mode}
                                 completeToDos={completeToDos}
+                                deleteToDos={deleteToDos}
                                 toDos={toDos}
                                 filterToDos={filterToDos}
                                 indexTodos={toDos[index].index_todos}
