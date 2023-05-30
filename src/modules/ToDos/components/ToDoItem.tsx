@@ -5,6 +5,7 @@ import Box from '@mui/material/Box';
 // import IconButton from '@mui/material/IconButton';
 import CheckIcon from '@mui/icons-material/Check';
 import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
 import { palette_colors } from '../types/types';
 
 
@@ -53,11 +54,16 @@ function ToDoItem(props: ToDoItemType) {
         justifyContent: 'center',
         alignItems: 'center'
       }}>
-        <Btn onClick={() => {completeToDos(index, indexTodos)}} sx={{
+        {/* <Btn onClick={() => {completeToDos(index, indexTodos)}} sx={{
           bgcolor: filterToDos === 'all' ? toDos[index].completed ? 'green' : 'none' : filterToDos === 'pending' ? 'none' : 'green'
         }}>
           <CheckIcon />
-        </Btn>
+        </Btn> */}
+        <IconButton onClick={() => {completeToDos(index, indexTodos)}} sx={{
+          color: filterToDos === 'all' ? toDos[index].completed ? 'green' : 'none' : filterToDos === 'pending' ? 'none' : 'green'
+        }}>
+          <CheckIcon />
+        </IconButton>
       </Box>
       <Box sx={{
         width: '80%'

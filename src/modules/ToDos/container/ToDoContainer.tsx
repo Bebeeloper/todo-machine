@@ -82,15 +82,15 @@ function ToDoContainer() {
 
   // ToDos Arrays
   const [toDos, setToDos] = useState<{index_todos: number; text: string; completed: boolean}[]>([
-    {index_todos: 0, text: 'Tatea 1', completed: false},
-    {index_todos: 0, text: 'Tatea 2', completed: false},
-    {index_todos: 0, text: 'Tatea 3', completed: false},
-    {index_todos: 0, text: 'Tatea 4', completed: false},
-    {index_todos: 0, text: 'Tatea 5', completed: false},
-    {index_todos: 0, text: 'Tatea 6', completed: false},
-    {index_todos: 0, text: 'Tatea 7', completed: false},
-    {index_todos: 0, text: 'Tatea 8', completed: false},
-    {index_todos: 0, text: 'Tatea 9', completed: false},
+    {index_todos: 0, text: 'Tarea 1', completed: false},
+    {index_todos: 0, text: 'Tarea 2', completed: false},
+    {index_todos: 0, text: 'Tarea 3', completed: false},
+    {index_todos: 0, text: 'Tarea 4', completed: false},
+    {index_todos: 0, text: 'Tarea 5', completed: false},
+    {index_todos: 0, text: 'Tarea 6', completed: false},
+    {index_todos: 0, text: 'Tarea 7', completed: false},
+    {index_todos: 0, text: 'Tarea 8', completed: false},
+    {index_todos: 0, text: 'Tarea 9', completed: false},
   ]);
 
   // ToDo filter
@@ -157,7 +157,6 @@ function ToDoContainer() {
       default:
         break;
     }
-    
   }
 
   const filterValue: any = {
