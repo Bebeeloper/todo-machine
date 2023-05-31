@@ -83,14 +83,14 @@ function ToDoContainer() {
   // ToDos Arrays
   const [toDos, setToDos] = useState<{index_todos: number; text: string; completed: boolean}[]>([
     {index_todos: 0, text: 'Tarea 1', completed: false},
-    {index_todos: 0, text: 'Tarea 2', completed: false},
-    {index_todos: 0, text: 'Tarea 3', completed: false},
-    {index_todos: 0, text: 'Tarea 4', completed: false},
-    {index_todos: 0, text: 'Tarea 5', completed: false},
-    {index_todos: 0, text: 'Tarea 6', completed: false},
-    {index_todos: 0, text: 'Tarea 7', completed: false},
-    {index_todos: 0, text: 'Tarea 8', completed: false},
-    {index_todos: 0, text: 'Tarea 9', completed: false},
+    {index_todos: 1, text: 'Tarea 2', completed: false},
+    {index_todos: 2, text: 'Tarea 3', completed: false},
+    {index_todos: 3, text: 'Tarea 4', completed: false},
+    {index_todos: 4, text: 'Tarea 5', completed: false},
+    {index_todos: 5, text: 'Tarea 6', completed: false},
+    {index_todos: 6, text: 'Tarea 7', completed: false},
+    {index_todos: 7, text: 'Tarea 8', completed: false},
+    {index_todos: 8, text: 'Tarea 9', completed: false},
   ]);
 
   // ToDo filter
@@ -119,7 +119,7 @@ function ToDoContainer() {
   });
 
   const [toDosCompleted, setToDosCompleted] = useState<{index_todos: number; text: string; completed: boolean}[]>([]);
-  const [toDosPending, setToDosPending] = useState<{index_todos: number; text: string; completed: boolean}[]>([]);
+  const [toDosPending, setToDosPending] = useState<{index_todos: number; text: string; completed: boolean}[]>(toDos.filter((todo) => !todo.completed));
   
   // Calculate screen width in real time
   useEffect(() => {
@@ -142,6 +142,7 @@ function ToDoContainer() {
         setToDos(newToDos);
         if (toDos[index].completed === true) {
           setToDosCompleted(oldArray => [...oldArray, {index_todos: index, text: toDos[index].text, completed: true}]);
+          setToDosPending(toDos.filter((todo) => !todo.completed));
         }        
         break;
       case 'completed':
@@ -162,28 +163,20 @@ function ToDoContainer() {
   const deleteToDos = (index: number) => {
     switch (filterToDos) {
       case 'all':
-        // const newToDos = [...toDos];
-        // newToDos.filter((todo, i) => i !== index);
         setToDos(toDos.filter((todo, i) => i !== index));
         console.log('index: ', index);
         if (toDos[index].completed) {
           setToDosCompleted(toDosCompleted.filter((todo) => todo.index_todos !== index));
-        }
-        
-        // if (toDos[index].completed === true) {
-        //   setToDosCompleted(oldArray => [...oldArray, {index_todos: index, text: toDos[index].text, completed: true}]);
-        // }        
+        }       
         break;
       case 'completed':
-        // const newToDosCompleted = [...toDosCompleted];
-        // newToDosCompleted[index].completed = false;
-        // setToDosCompleted(newToDosCompleted.filter((todo: any) => todo.completed));
-        // break;
+        console.log(toDosCompleted[index].index_todos);
+        setToDosCompleted(toDosCompleted.filter((todo, i) => i !== index));
+        setToDos(toDos.filter((todo, i) => todo.index_todos !== toDosCompleted[index].index_todos));
+        break;
       case 'pending':
-        // const newToDosPending = [...toDosPending];
-        // newToDosPending[index].completed = true;
-        // setToDosPending(newToDosPending.filter((todo: any) => !todo.completed));
-        // break;
+        
+        break;
       default:
         break;
     }
@@ -301,6 +294,8 @@ function ToDoContainer() {
                         setFilterToDos={setFilterToDos}
                         filterToDosSelect={filterToDosSelect}
                         toDos={toDos}
+                        toDosCompleted={toDosCompleted}
+                        toDosPending={toDosPending}
                         setToDos={setToDos}
                         setToDosCompleted={setToDosCompleted}
                         setToDosPending={setToDosPending}
@@ -367,6 +362,8 @@ function ToDoContainer() {
                 setFilterToDos={setFilterToDos}
                 filterToDosSelect={filterToDosSelect}
                 toDos={toDos}
+                toDosCompleted={toDosCompleted}
+                toDosPending={toDosPending}
                 setToDos={setToDos}
                 setToDosCompleted={setToDosCompleted}
                 setToDosPending={setToDosPending}

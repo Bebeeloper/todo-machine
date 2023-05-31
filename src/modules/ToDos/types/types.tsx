@@ -33,6 +33,8 @@ export type ToDoSearchType = {
     setFilterToDos: React.Dispatch<React.SetStateAction<string>>;
     filterToDosSelect: FilterToDos;
     toDos: ToDos;
+    toDosCompleted: ToDos;
+    toDosPending: ToDos;
     setToDos: React.Dispatch<React.SetStateAction<{
         index_todos: number;
         text: string;

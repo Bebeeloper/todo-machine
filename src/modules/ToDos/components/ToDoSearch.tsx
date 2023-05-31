@@ -39,7 +39,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 function ToDoSearch(props: ToDoSearchType) {
 
-  const { mode, screenWidth, filterToDos, filterToDosSelect, setFilterToDos, toDos, setToDos, setToDosCompleted, setToDosPending } = props;
+  const { mode, screenWidth, filterToDos, filterToDosSelect, setFilterToDos, toDos, toDosCompleted, toDosPending,  setToDos, setToDosCompleted, setToDosPending } = props;
 
   const Search = styled('div')(({ theme }) => ({
     width: '100%',
@@ -64,9 +64,11 @@ function ToDoSearch(props: ToDoSearchType) {
 
   const handleChange = (event: any) => {
     setFilterToDos(event.target.value); 
-    // setToDos(toDos);
-    setToDosCompleted(toDos.filter((toDo: any) => toDo.completed === true));
-    setToDosPending(toDos.filter((toDo: any) => toDo.completed === false));   
+    setToDos(toDos);
+    // setToDosCompleted(toDos.filter((toDo: any) => toDo.completed === true));
+    setToDosCompleted(toDosCompleted);
+    // setToDosPending(toDos.filter((toDo: any) => toDo.completed === false));   
+    setToDosPending(toDosPending);   
   };
 
   return (
