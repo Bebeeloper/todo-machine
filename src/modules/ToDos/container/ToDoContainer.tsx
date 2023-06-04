@@ -14,8 +14,6 @@ import CreateTask from '../components/CreateTask';
 import Switch from '@mui/material/Switch';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
-// import { log } from 'util';
-
 
 // [
 //   {index_todos: 0, text: 'Tarea 1', completed: false},
@@ -36,7 +34,6 @@ const styledModal = {
   transform: 'translate(-50%, -50%)',
   width: '70%',
   bgcolor: 'background.paper',
-  // border: '2px solid #000',
   borderRadius: 3,
   boxShadow: 24,
   p: 4,
@@ -289,6 +286,10 @@ function ToDoContainer() {
                   }}>
                       <CreateTask 
                         createTaskMethod={ createTaskMethod }
+                        openModal={openModal}
+                        setOpenModal={setOpenModal}
+                        screenWidth={screenWidth}
+                        mode={mode}
                       />
                       <img src={taskPic} alt="imagen de tareas" style={{width: '60%'}} />
                   </Box>
@@ -474,6 +475,10 @@ function ToDoContainer() {
                   <Box sx={styledModal}>
                   <CreateTask 
                     createTaskMethod={ createTaskMethod }
+                    openModal={openModal}
+                    setOpenModal={setOpenModal}
+                    screenWidth={screenWidth}
+                    mode={mode}
                   />
                   </Box>
                 </Modal>

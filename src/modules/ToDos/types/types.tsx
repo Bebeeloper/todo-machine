@@ -2,6 +2,10 @@ import { ReactNode } from "react";
 
 export type createTaskType = {
     createTaskMethod: (task: string) => void;
+    openModal: boolean;
+    setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
+    screenWidth: number;
+    mode: boolean;
 }
 
 export type ToDoCounterType = {

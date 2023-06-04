@@ -13,7 +13,7 @@ import { getValue } from '@testing-library/user-event/dist/utils';
 function CreateTask(props: createTaskType) {
 
     // let task_input: string;
-    const { createTaskMethod } = props;
+    const { createTaskMethod, openModal, setOpenModal, screenWidth, mode } = props;
 
     const {register, formState: {errors}, handleSubmit, reset, formState, getValues} = useForm({
         mode: "onChange"
@@ -22,6 +22,7 @@ function CreateTask(props: createTaskType) {
     const onSubmitModal = () => {
         const { task } = getValues();
         createTaskMethod(task);
+        setOpenModal(false);
         reset();
     };
 
@@ -34,7 +35,13 @@ function CreateTask(props: createTaskType) {
             // bgcolor: 'blue' 
         }} >
             <Typography variant="h4" sx={{
-                // color: 'white',
+                color: screenWidth > 800 && mode ? 
+                        'white' : 
+                        screenWidth > 800 && !mode ? 
+                            'black' :
+                            screenWidth <= 800 && mode ?
+                                'white' :
+                                'black',
                 mb: '40px',
                 fontWeight: '700'
             }}>
