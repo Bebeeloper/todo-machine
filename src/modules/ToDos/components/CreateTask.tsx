@@ -5,18 +5,23 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import { createTaskType } from '../types/types';
 import { palette_colors } from '../types/types';
+import { getValue } from '@testing-library/user-event/dist/utils';
 // import { LightDarkMode } from '../types/types';
 
-function CreateTask(/*props: LightDarkMode*/) {
+function CreateTask(props: createTaskType) {
 
-    // const {screenWidth} = props;
+    // let task_input: string;
+    const { createTaskMethod } = props;
 
-    const {register, formState: {errors}, handleSubmit, reset, /*formState, getValues*/} = useForm({
+    const {register, formState: {errors}, handleSubmit, reset, formState, getValues} = useForm({
         mode: "onChange"
     });
     
     const onSubmitModal = () => {
+        const { task } = getValues();
+        createTaskMethod(task);
         reset();
     };
 
@@ -41,7 +46,7 @@ function CreateTask(/*props: LightDarkMode*/) {
                 margin="normal"
                 required
                 fullWidth
-                id="Task"
+                id="task"
                 label="Tarea"
                 // name="task"
                 autoComplete="task"

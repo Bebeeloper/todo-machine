@@ -1,5 +1,9 @@
 import { ReactNode } from "react";
 
+export type createTaskType = {
+    createTaskMethod: (task: string) => void;
+}
+
 export type ToDoCounterType = {
     completed: number;
     total: number;

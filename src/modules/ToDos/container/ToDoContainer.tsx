@@ -14,6 +14,20 @@ import CreateTask from '../components/CreateTask';
 import Switch from '@mui/material/Switch';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
+// import { log } from 'util';
+
+
+// [
+//   {index_todos: 0, text: 'Tarea 1', completed: false},
+//   {index_todos: 1, text: 'Tarea 2', completed: false},
+//   {index_todos: 2, text: 'Tarea 3', completed: false},
+//   {index_todos: 3, text: 'Tarea 4', completed: false},
+//   {index_todos: 4, text: 'Tarea 5', completed: false},
+//   {index_todos: 5, text: 'Tarea 6', completed: false},
+//   {index_todos: 6, text: 'Tarea 7', completed: false},
+//   {index_todos: 7, text: 'Tarea 8', completed: false},
+//   {index_todos: 8, text: 'Tarea 9', completed: false},
+// ]
 
 const styledModal = {
   position: 'absolute' as 'absolute',
@@ -80,18 +94,22 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
 
 function ToDoContainer() {
 
+  // localStorage.removeItem()
+  const localStorageToDos: string = localStorage.getItem('TODOS_V1') as string;
+  
+  let parsedToDos : any;
+
+  if (!localStorageToDos) {
+    localStorage.setItem('TODOS_V1', JSON.stringify([]));
+    parsedToDos = [];
+  }else {
+    parsedToDos = JSON.parse(localStorageToDos);
+  }
+
   // ToDos Arrays
-  const [toDos, setToDos] = useState<{index_todos: number; text: string; completed: boolean}[]>([
-    {index_todos: 0, text: 'Tarea 1', completed: false},
-    {index_todos: 1, text: 'Tarea 2', completed: false},
-    {index_todos: 2, text: 'Tarea 3', completed: false},
-    {index_todos: 3, text: 'Tarea 4', completed: false},
-    {index_todos: 4, text: 'Tarea 5', completed: false},
-    {index_todos: 5, text: 'Tarea 6', completed: false},
-    {index_todos: 6, text: 'Tarea 7', completed: false},
-    {index_todos: 7, text: 'Tarea 8', completed: false},
-    {index_todos: 8, text: 'Tarea 9', completed: false},
-  ]);
+  const [toDos, setToDos] = useState<{index_todos: number; text: string; completed: boolean}[]>(parsedToDos);
+  const [toDosCompleted, setToDosCompleted] = useState<{index_todos: number; text: string; completed: boolean}[]>([]);
+  const [toDosPending, setToDosPending] = useState<{index_todos: number; text: string; completed: boolean}[]>(toDos.filter((todo) => !todo.completed));
 
   // ToDo filter
   const [filterToDos, setFilterToDos] = useState<string>('all');
@@ -118,9 +136,6 @@ function ToDoContainer() {
       }
   });
 
-  const [toDosCompleted, setToDosCompleted] = useState<{index_todos: number; text: string; completed: boolean}[]>([]);
-  const [toDosPending, setToDosPending] = useState<{index_todos: number; text: string; completed: boolean}[]>(toDos.filter((todo) => !todo.completed));
-  
   // Calculate screen width in real time
   useEffect(() => {
     const handleWindowResize = () => {
@@ -133,6 +148,11 @@ function ToDoContainer() {
       window.removeEventListener('resize', handleWindowResize);
     };
   }, []);
+
+  const createTaskMethod = (task: string) => {
+    setToDos(oldArray => [...oldArray, {index_todos: toDos.length, text: task, completed: false}]);
+    console.log(toDos);
+  }
 
   const completeToDos = (index: number, index_todos: number) => {
     switch (filterToDos) {
@@ -267,7 +287,9 @@ function ToDoContainer() {
                       height: '100%'
                       // bgcolor: 'blue'
                   }}>
-                      <CreateTask/>
+                      <CreateTask 
+                        createTaskMethod={ createTaskMethod }
+                      />
                       <img src={taskPic} alt="imagen de tareas" style={{width: '60%'}} />
                   </Box>
                   <Box sx={{ 
@@ -450,7 +472,9 @@ function ToDoContainer() {
                   aria-describedby="modal-modal-description"
                 >
                   <Box sx={styledModal}>
-                    <CreateTask/>
+                  <CreateTask 
+                    createTaskMethod={ createTaskMethod }
+                  />
                   </Box>
                 </Modal>
               </Box>            
