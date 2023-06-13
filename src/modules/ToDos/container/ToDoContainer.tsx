@@ -5,6 +5,9 @@ import ToDoList from '../components/ToDoList';
 import ToDoItem from '../components/ToDoItem';
 import { palette_colors } from '../types/types';
 import taskPic from '../../../resources/task.png';
+import { Splide, SplideSlide } from '@splidejs/react-splide';
+import '@splidejs/react-splide/css';
+import CarouselPics from '../components/ToDoPics';
 
 // Material ui
 import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
@@ -277,13 +280,18 @@ function ToDoContainer() {
               }}>    
                   <Box sx={{ 
                       display: 'flex',
-                      justifyContent: 'center',
+                      // justifyContent: 'center',
                       flexDirection: 'column',
-                      alignItems: 'center',
+                      // alignItems: 'center',
                       width: '50%',
                       height: '100%'
-                      // bgcolor: 'blue'
                   }}>
+                    <Box sx={{
+                      width: '100%',
+                      height: '50%',
+                      display: 'flex',
+                      justifyContent: 'center',
+                    }}>
                       <CreateTask 
                         createTaskMethod={ createTaskMethod }
                         openModal={openModal}
@@ -291,7 +299,43 @@ function ToDoContainer() {
                         screenWidth={screenWidth}
                         mode={mode}
                       />
-                      <img src={taskPic} alt="imagen de tareas" style={{width: '60%'}} />
+                    </Box>
+                    <Box sx={{
+                      width: '100%',
+                      height: '50%',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center'
+                    }}>
+                      {/* <img src={taskPic} alt="imagen de tareas" style={{width: '60%'}} /> */}
+                      <Splide aria-label="My Favorite Images" options={{
+                        rewind: true,
+                        width : '70%',
+                        autoplay: true,
+                        gap: '1rem',
+                      }}>
+                        {CarouselPics.map((item_carousel: any) => (
+                          <SplideSlide style={{
+                            width: '100%',
+                            height: '100%',
+                            display: 'flex',
+                            justifyContent: 'center'
+                            // justifyContent: 'center', backgroundColor: 'blue'
+                          }}>
+                            <img src={item_carousel.img} alt="img 1" style={{
+                              width: '600px',
+                              height: '250px',
+                              borderRadius: '10px',
+                              objectFit: 'cover',
+                              // backgroundColor: 'blue'
+                            }}/>
+                          </SplideSlide>
+                        ))}
+                        {/* <SplideSlide>
+                          <img src={taskPic} alt="img 2" style={{width: '70%'}}/>
+                        </SplideSlide> */}
+                      </Splide>
+                    </Box>
                   </Box>
                   <Box sx={{ 
                     width: '50%',
