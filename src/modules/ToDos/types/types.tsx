@@ -24,7 +24,7 @@ export type ToDoItemType = {
     indexTodos: number;
 };
 
-type ToDos = {
+export type ToDos = {
     index_todos: number;
     text: string;
     completed: boolean;

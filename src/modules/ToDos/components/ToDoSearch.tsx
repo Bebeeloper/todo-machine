@@ -26,7 +26,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   height: '100%',
   color: 'inherit',
   '& .MuiInputBase-input': {
-    padding: theme.spacing(1, 1, 1, 0),
+    // padding: theme.spacing(1, 1, 1, 0),
     // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create('width'),
@@ -55,9 +55,9 @@ function ToDoSearch(props: ToDoSearchType) {
       boxShadow: mode === false ? 'rgba(60, 64, 67, 0.5) 0px 1px 2px 0px, rgba(60, 64, 67, 0.2) 0px 2px 6px 2px' : 'none',
       backgroundColor: mode === false ? 'none' : alpha(theme.palette.common.white, 0.3),
     },
-    marginLeft: 0,
+    // marginLeft: 0,
     [theme.breakpoints.up('sm')]: {
-      marginLeft: theme.spacing(1),
+      // marginLeft: theme.spacing(1),
       width: 'auto',
     },
   }));
@@ -75,7 +75,8 @@ function ToDoSearch(props: ToDoSearchType) {
     <Box sx={{
       width: '100%',
       display: 'flex',
-      justifyContent: screenWidth > 800 ? 'space-between' : 'space-around'
+      // justifyContent: screenWidth > 800 ? 'space-between' : 'space-around'
+      justifyContent: 'space-around'
     }}>
       <Search style={{width: '60%'}}>
         <SearchIconWrapper>

@@ -12,6 +12,8 @@ function ToDoList(props: ToDoListType) {
       overflow: 'auto', 
       width: '100%', 
       height: '95%',
+      boxShadow: 'rgba(0, 0, 0, 0.09) 0px 0px 10px 2px inset',
+      borderRadius: '10px'
     }}>
       {children}
     </Box>

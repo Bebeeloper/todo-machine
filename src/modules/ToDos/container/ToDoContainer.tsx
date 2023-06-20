@@ -17,6 +17,7 @@ import CreateTask from '../components/CreateTask';
 import Switch from '@mui/material/Switch';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
+import { ToDos } from '../types/types';
 
 // [
 //   {index_todos: 0, text: 'Tarea 1', completed: false},
@@ -96,20 +97,25 @@ function ToDoContainer() {
 
   // localStorage.removeItem()
   const localStorageToDos: string = localStorage.getItem('TODOS_V1') as string;
+  // console.log('Esto es lo que tengo en el localStorage: ', localStorageToDos);
   
-  let parsedToDos : any;
+  let parsedToDos : ToDos;
 
   if (!localStorageToDos) {
+    // localStorage.setItem('TODOS_V1', JSON.stringify([{idex_todos: 0, text: '', completed: false}]));
     localStorage.setItem('TODOS_V1', JSON.stringify([]));
-    parsedToDos = [];
+    parsedToDos = JSON.parse(localStorage.getItem('TODOS_V1') as string);
   }else {
     parsedToDos = JSON.parse(localStorageToDos);
   }
 
+  // console.log('No se que tiene parsedTodos: ', parsedToDos);
+  
+
   // ToDos Arrays
   const [toDos, setToDos] = useState<{index_todos: number; text: string; completed: boolean}[]>(parsedToDos);
   const [toDosCompleted, setToDosCompleted] = useState<{index_todos: number; text: string; completed: boolean}[]>([]);
-  const [toDosPending, setToDosPending] = useState<{index_todos: number; text: string; completed: boolean}[]>(toDos.filter((todo) => !todo.completed));
+  const [toDosPending, setToDosPending] = useState<{index_todos: number; text: string; completed: boolean}[]>(parsedToDos.filter((todo) => !todo.completed));
 
   // ToDo filter
   const [filterToDos, setFilterToDos] = useState<string>('all');
@@ -150,8 +156,16 @@ function ToDoContainer() {
   }, []);
 
   const createTaskMethod = (task: string) => {
-    setToDos(oldArray => [...oldArray, {index_todos: toDos.length, text: task, completed: false}]);
-    console.log(toDos);
+    const newToDos = [{index_todos: toDos.length, text: task, completed: false}]; 
+    // let toDosForSave = [];
+    console.log('New todos: ', newToDos);
+    
+    setToDos((oldArray) => [...oldArray, ...newToDos]);
+    // setToDos(oldArray => [...oldArray, newElement]);
+
+    let toDosForSave = [...toDos, ...newToDos];
+    // console.log(toDos);
+    localStorage.setItem('TODOS_V1', JSON.stringify(toDosForSave));
   }
 
   const completeToDos = (index: number, index_todos: number) => {
@@ -202,47 +216,51 @@ function ToDoContainer() {
     }
   }
 
-  const filterValue: any = {
-    "all": toDos.map((todo, index) => (
-      <ToDoItem 
-        key={index} 
-        index={index}
-        text={todo.text}
-        mode={mode}
-        completeToDos={completeToDos}
-        deleteToDos={deleteToDos}
-        toDos={toDos}
-        filterToDos={filterToDos}
-        indexTodos={toDos[index].index_todos}
-      />
-    )),
-    "completed": toDosCompleted.map((todo, index) => (
-      <ToDoItem 
-        key={index} 
-        index={index}
-        text={todo.text}
-        mode={mode}
-        completeToDos={completeToDos}
-        deleteToDos={deleteToDos}
-        toDos={toDos}
-        filterToDos={filterToDos}
-        indexTodos={toDos[index].index_todos}
-      />
-    )),
-    "pending": toDosPending.map((todo, index) => (
-      <ToDoItem 
-        key={index} 
-        index={index}
-        text={todo.text}
-        mode={mode}
-        completeToDos={completeToDos}
-        deleteToDos={deleteToDos}
-        toDos={toDos}
-        filterToDos={filterToDos}
-        indexTodos={toDos[index].index_todos}
-      />
-    ))
-  };
+  let filterValue: any;
+
+  if (toDos.length > 0) {
+    filterValue = {
+      "all": toDos.map((todo, index) => (
+        <ToDoItem 
+          key={index} 
+          index={index}
+          text={todo.text}
+          mode={mode}
+          completeToDos={completeToDos}
+          deleteToDos={deleteToDos}
+          toDos={toDos}
+          filterToDos={filterToDos}
+          indexTodos={toDos[index].index_todos}
+        />
+      )),
+      "completed": toDosCompleted.map((todo, index) => (
+        <ToDoItem 
+          key={index} 
+          index={index}
+          text={todo.text}
+          mode={mode}
+          completeToDos={completeToDos}
+          deleteToDos={deleteToDos}
+          toDos={toDos}
+          filterToDos={filterToDos}
+          indexTodos={toDos[index].index_todos}
+        />
+      )),
+      "pending": toDosPending.map((todo, index) => (
+        <ToDoItem 
+          key={index} 
+          index={index}
+          text={todo.text}
+          mode={mode}
+          completeToDos={completeToDos}
+          deleteToDos={deleteToDos}
+          toDos={toDos}
+          filterToDos={filterToDos}
+          indexTodos={toDos[index].index_todos}
+        />
+      ))
+    };
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -289,8 +307,6 @@ function ToDoContainer() {
                     <Box sx={{
                       width: '100%',
                       height: '50%',
-                      display: 'flex',
-                      justifyContent: 'center',
                     }}>
                       <CreateTask 
                         createTaskMethod={ createTaskMethod }
@@ -347,7 +363,7 @@ function ToDoContainer() {
                       width: '100%',
                       height: '40%',
                       display: 'flex',
-                      alignItems: 'center',
+                      // alignItems: 'center',
                       justifyContent: 'center',
                       flexDirection: 'column',
                       // bgcolor: 'red'
@@ -373,20 +389,24 @@ function ToDoContainer() {
                       height: '60%',
                       position: 'relative',
                     }}>
-                      <ToDoList>
-                        {
-                          filterValue[filterToDos]
-                        }
-                        {/* {toDos.map((todo, index) => (
-                          <ToDoItem 
-                            key={index} 
-                            text={todo.text}
-                            mode={mode}
-                            taskCompleted={taskCompleted}
-                            setTaskCompleted={setTaskCompleted}
-                          />
-                        ))} */}
-                      </ToDoList>
+                      {
+                        toDos.length > 0 ? 
+                        <ToDoList>
+                          {
+                            filterValue[filterToDos]
+                          }
+                          {/* {toDos.map((todo, index) => (
+                            <ToDoItem 
+                              key={index} 
+                              text={todo.text}
+                              mode={mode}
+                              taskCompleted={taskCompleted}
+                              setTaskCompleted={setTaskCompleted}
+                            />
+                          ))} */}
+                        </ToDoList> :
+                        ''
+                      }
                     </Box>
                   </Box>
               </Paper>
@@ -448,59 +468,63 @@ function ToDoContainer() {
                 height: '90%',
                 position: 'relative'
               }}>
-                <ToDoList>
-                  {
-                    filterToDos === 'all' ? 
-                      toDos.map((todo, index) => (
-                        <ToDoItem 
-                          key={index} 
-                          index={index}
-                          text={todo.text}
-                          mode={mode}
-                          completeToDos={completeToDos}
-                          deleteToDos={deleteToDos}
-                          toDos={toDos}
-                          filterToDos={filterToDos}
-                          indexTodos={toDos[index].index_todos}
-                        />
-                      )) : filterToDos === 'completed' ? 
-                            toDosCompleted.map((todo, index) => (
-                              <ToDoItem 
-                                key={index} 
-                                index={index}
-                                text={todo.text}
-                                mode={mode}
-                                completeToDos={completeToDos}
-                                deleteToDos={deleteToDos}
-                                toDos={toDos}
-                                filterToDos={filterToDos}
-                                indexTodos={toDos[index].index_todos}
-                              />
-                            )) : 
-                            toDosPending.map((todo, index) => (
-                              <ToDoItem 
-                                key={index} 
-                                index={index}
-                                text={todo.text}
-                                mode={mode}
-                                completeToDos={completeToDos}
-                                deleteToDos={deleteToDos}
-                                toDos={toDos}
-                                filterToDos={filterToDos}
-                                indexTodos={toDos[index].index_todos}
-                              />
-                            ))
-                  }
-                  {/* {toDos.map((todo, index) => (
-                    <ToDoItem 
-                      key={index} 
-                      text={todo.text}
-                      mode={mode}
-                      taskCompleted={taskCompleted}
-                      setTaskCompleted={setTaskCompleted}
-                    />
-                  ))} */}
-                </ToDoList>
+                {
+                  toDos.length > 0 ? 
+                  <ToDoList>
+                    {
+                      filterToDos === 'all' ? 
+                        toDos.map((todo, index) => (
+                          <ToDoItem 
+                            key={index} 
+                            index={index}
+                            text={todo.text}
+                            mode={mode}
+                            completeToDos={completeToDos}
+                            deleteToDos={deleteToDos}
+                            toDos={toDos}
+                            filterToDos={filterToDos}
+                            indexTodos={toDos[index].index_todos}
+                          />
+                        )) : filterToDos === 'completed' ? 
+                              toDosCompleted.map((todo, index) => (
+                                <ToDoItem 
+                                  key={index} 
+                                  index={index}
+                                  text={todo.text}
+                                  mode={mode}
+                                  completeToDos={completeToDos}
+                                  deleteToDos={deleteToDos}
+                                  toDos={toDos}
+                                  filterToDos={filterToDos}
+                                  indexTodos={toDos[index].index_todos}
+                                />
+                              )) : 
+                              toDosPending.map((todo, index) => (
+                                <ToDoItem 
+                                  key={index} 
+                                  index={index}
+                                  text={todo.text}
+                                  mode={mode}
+                                  completeToDos={completeToDos}
+                                  deleteToDos={deleteToDos}
+                                  toDos={toDos}
+                                  filterToDos={filterToDos}
+                                  indexTodos={toDos[index].index_todos}
+                                />
+                              ))
+                    }
+                    {/* {toDos.map((todo, index) => (
+                      <ToDoItem 
+                        key={index} 
+                        text={todo.text}
+                        mode={mode}
+                        taskCompleted={taskCompleted}
+                        setTaskCompleted={setTaskCompleted}
+                      />
+                    ))} */}
+                  </ToDoList> :
+                  ''
+                }
               </Box>
               <Box sx={{
                 width: '100%',

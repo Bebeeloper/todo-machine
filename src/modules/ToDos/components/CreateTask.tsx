@@ -29,12 +29,14 @@ function CreateTask(props: createTaskType) {
   return (
     <>
         <Box component="form" noValidate onSubmit={handleSubmit(onSubmitModal)} sx={{
-            padding: '1rem',
-            width: '80%', 
-            height: '50%'
-            // bgcolor: 'blue' 
+            width: '100%', 
+            height: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
         }} >
-            <Typography variant="h4" sx={{
+            <Typography textAlign={'center'} variant="h4" sx={{
                 color: screenWidth > 800 && mode ? 
                         'white' : 
                         screenWidth > 800 && !mode ? 
@@ -42,7 +44,7 @@ function CreateTask(props: createTaskType) {
                             screenWidth <= 800 && mode ?
                                 'white' :
                                 'black',
-                mb: '40px',
+                // mb: '40px',
                 fontWeight: '700'
             }}>
                 Crea una tarea
@@ -52,7 +54,7 @@ function CreateTask(props: createTaskType) {
                 maxRows={4}
                 margin="normal"
                 required
-                fullWidth
+                // fullWidth
                 id="task"
                 label="Tarea"
                 // name="task"
@@ -60,6 +62,9 @@ function CreateTask(props: createTaskType) {
                 autoFocus
                 {...register('task', {required: true})}
                 // inputProps={{ style: { fontFamily: 'nunito', color: 'white' } }}
+                sx={{
+                    width: '80%'
+                }}
             />
             {errors.task?.type === 'required' && <Typography variant="body1" sx={{color: palette_colors.error}}>Debe escribir una tarea</Typography>}
             <Button
@@ -67,6 +72,9 @@ function CreateTask(props: createTaskType) {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
                 endIcon={<AddCircleOutlineIcon/>}
+                style={{
+                    width: '80%'
+                }}
             >
                 Crear tarea
             </Button>
