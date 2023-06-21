@@ -3,7 +3,7 @@ import ToDoCounter from '../components/ToDoCounter';
 import ToDoSearch from '../components/ToDoSearch';
 import ToDoList from '../components/ToDoList';
 import ToDoItem from '../components/ToDoItem';
-import { palette_colors } from '../types/types';
+import { DarkMode, palette_colors } from '../types/types';
 import taskPic from '../../../resources/task.png';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import '@splidejs/react-splide/css';
@@ -97,8 +97,9 @@ function ToDoContainer() {
 
   // localStorage.removeItem()
   const localStorageToDos: string = localStorage.getItem('TODOS_V1') as string;
-  // console.log('Esto es lo que tengo en el localStorage: ', localStorageToDos);
-  
+  const localStorageDarkMode: string = localStorage.getItem('DARK_MODE') as string;
+
+  let parsedDarkMode: DarkMode;
   let parsedToDos : ToDos;
 
   if (!localStorageToDos) {
@@ -109,7 +110,14 @@ function ToDoContainer() {
     parsedToDos = JSON.parse(localStorageToDos);
   }
 
-  // console.log('No se que tiene parsedTodos: ', parsedToDos);
+  if (!localStorageDarkMode) {
+    localStorage.setItem('DARK_MODE', JSON.stringify({mode: false}));
+    parsedDarkMode = JSON.parse(localStorage.getItem('DARK_MODE') as string);
+  }else {
+    parsedDarkMode = JSON.parse(localStorageDarkMode);
+  }
+
+  console.log('No se que tiene parsedTodos: ', parsedDarkMode);
   
 
   // ToDos Arrays
@@ -133,7 +141,7 @@ function ToDoContainer() {
   const [screenWidth, setScreenWidth] = useState<number>(window.innerWidth);
 
   // Dark light mode
-  const [mode, setMode] = useState<boolean>(false);
+  const [mode, setMode] = useState<boolean>(parsedDarkMode.mode);
 
   // Dark light mode theme
   const theme = createTheme({
@@ -157,14 +165,11 @@ function ToDoContainer() {
 
   const createTaskMethod = (task: string) => {
     const newToDos = [{index_todos: toDos.length, text: task, completed: false}]; 
-    // let toDosForSave = [];
     console.log('New todos: ', newToDos);
     
     setToDos((oldArray) => [...oldArray, ...newToDos]);
-    // setToDos(oldArray => [...oldArray, newElement]);
 
     let toDosForSave = [...toDos, ...newToDos];
-    // console.log(toDos);
     localStorage.setItem('TODOS_V1', JSON.stringify(toDosForSave));
   }
 
@@ -214,6 +219,11 @@ function ToDoContainer() {
       default:
         break;
     }
+  }
+
+  const setDarkMode = () => {
+    localStorage.setItem('DARK_MODE', JSON.stringify({mode: !mode}));
+    setMode(!mode);
   }
 
   let filterValue: any;
@@ -278,7 +288,7 @@ function ToDoContainer() {
             pr: 2,
             alignSelf: 'flex-end'
           }}>
-            <MaterialUISwitch onClick={() => setMode(!mode)}/>
+            <MaterialUISwitch checked={parsedDarkMode.mode} onClick={setDarkMode}/>
           </Box>
           <Box sx={{
               display: 'flex',
@@ -427,7 +437,7 @@ function ToDoContainer() {
             alignSelf: 'flex-end',
             
           }}>
-            <MaterialUISwitch onClick={() => setMode(!mode)} />
+            <MaterialUISwitch checked={parsedDarkMode.mode} onClick={setDarkMode} />
           </Box>
           <Box sx={{
             width: '100%',

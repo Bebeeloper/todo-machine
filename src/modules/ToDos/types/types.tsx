@@ -79,6 +79,10 @@ export const palette_colors = {
     dark_background: '#192229'
 }
 
+export type DarkMode = {
+    mode: boolean
+}
+
 // export type ToDoSearchType = {
 //     screenWidth: number
 // }
